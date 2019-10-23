@@ -1,3 +1,6 @@
+import sqlite3 as lite
+import sys
+#holahola
 
 class RecepieLine:
     number = 0
@@ -20,7 +23,6 @@ def resetClass():
     rand_line.ingriedient = "no_ingredient"
     rand_line.extra = "no_extra"
 
-#unit_list = ["kg","g","l","liter","ml","stück","stk","kugel","kugeln","zehe","zehen","etwas","einige","packet","pck","pck.","m.-groãÿer"]
 unit_file = open("unit_list.txt")
 unit_list = unit_file.readlines()
 unit_file.close()
