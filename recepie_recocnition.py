@@ -2,7 +2,7 @@ import sqlite3 as lite
 import sys
 
 sorted_file = "sorted.txt"
-recepie_file = "unit_list.txt"
+recepie_file = "recepie.txt"
 unit_file = "unit_list.txt"
 
 class RecepieLine:
@@ -61,7 +61,7 @@ for line in raw_lines:
     elif raw_lines[num][0].lower() in unit_list:
         rand_line.unit = raw_lines[num][0]
         print("no amount detected at line", num)
-        rand_line.ingriedient = raw_lines[num][0]
+        rand_line.ingriedient = raw_lines[num][1]
     else:
         #rand_line.amount = "no_amount"
         print("no amount detected at line", num)
