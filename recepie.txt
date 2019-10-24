@@ -1,4 +1,4 @@
-4                 Burger Brötchen
+5                 Burger Brötchen
 8                 Salatblätter
 2                 Tomaten
 1                 Aubergine
@@ -7,4 +7,4 @@
 3 EL           Mayonnaise
 1 Zehe       Knoblauch
 1 Spritzer  grüner Tabasco
-n.B.            Salz, Pfeffer, Olivenöl 
+n.B.            Salz, Pfeffer, Olivenöl

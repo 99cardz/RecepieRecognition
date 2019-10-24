@@ -1,7 +1,7 @@
 import sqlite3 as lite
 import sys
-#holahola
 
+sorted_file = "sorted.txt"
 class RecepieLine:
     number = 0
     ingriedient = ""
@@ -12,6 +12,14 @@ class RecepieLine:
         desc_str = "%s: %s %s %s %s" % (self.number, self.amount, self.unit, self.ingriedient, self.extra)
         #desc = self.number,": ", self.amount, self.unit, self.ingriedient
         return desc_str
+
+def print_to_sorted_file(sorted_list):
+    file = open(sorted_file,"w")
+    file.seek(0)
+    file.truncate()
+    for line in sorted_list:
+        file.write(line)
+    file.close()
 
 def hasNumber(inputStr):
     return any(char.isdigit() for char in inputStr)
@@ -69,3 +77,4 @@ for line in raw_lines:
     resetClass()
     num+=1
 print(recepie_list)
+print_to_sorted_file(recepie_list)
