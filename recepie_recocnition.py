@@ -22,6 +22,7 @@ def print_to_sorted_file(sorted_list):
     file.truncate()
     for line in sorted_list:
         file.write(line)
+        file.write("\n")
     file.close()
 
 def hasNumber(inputStr):
@@ -34,43 +35,51 @@ def resetClass():
     rand_line.ingriedient = "no_ingredient"
     rand_line.extra = "no_extra"
 
+
+### IMPORT UNITS FROM UNIT FILE
 unit_file = open("unit_list.txt")
 unit_list = unit_file.readlines()
 unit_file.close()
 unit_list = [line[:-1]for line in unit_list]
-print(unit_list)
+unit_list = [unit_list[n].lower()for n in range(0,len(unit_list))]
+print(*unit_list)
 
+###IMPORT RECEPIE FROM RECEPIE FILE
 file = open(recepie_file)
-raw_lines = file.readlines()
+recepie_list = file.readlines()
 file.close()
-raw_lines = [line[:-1]for line in raw_lines]
-raw_lines = [line.split()for line in raw_lines]
-#raw_lines = [line.lower()for line in raw_lines]
-print(raw_lines)
+recepie_list = [line[:-1]for line in recepie_list]
+recepie_list = [line.split()for line in recepie_list]
+#raw_lines = [line[1].lower()for line in raw_lines]
+for line in range(len(recepie_list)):
+    for n in range(line-1):
+        print (n)
+        #raw_lines[n-1].lower()
+print(recepie_list)
 
 rand_line = RecepieLine()
 num = 0
 recepie_list = []
 resetClass()
-for line in raw_lines:
+for line in recepie_list:
     rand_line.number = num
 
-    if hasNumber(raw_lines[num][0]):
-        rand_line.amount = raw_lines[num][0]
-        rand_line.ingriedient = raw_lines[num][1]
-    elif raw_lines[num][0].lower() in unit_list:
-        rand_line.unit = raw_lines[num][0]
+    if hasNumber(recepie_list[num][0]):
+        rand_line.amount = recepie_list[num][0]
+        rand_line.ingriedient = recepie_list[num][1]
+    elif recepie_list[num][0].lower() in unit_list:
+        rand_line.unit = recepie_list[num][0]
         print("no amount detected at line", num)
-        rand_line.ingriedient = raw_lines[num][1]
+        rand_line.ingriedient = recepie_list[num][1]
     else:
         #rand_line.amount = "no_amount"
         print("no amount detected at line", num)
-        rand_line.ingriedient = [raw_lines[num][i]for i in range(len(raw_lines[num]))]
+        rand_line.ingriedient = [recepie_list[num][i]for i in range(len(recepie_list[num]))]
 
-    if len(raw_lines[num]) > 1 and raw_lines[num][1].lower() in unit_list:
+    if len(recepie_list[num]) > 1 and recepie_list[num][1].lower() in unit_list:
 
-        rand_line.unit = raw_lines[num][1]
-        rand_line.ingriedient = raw_lines[num][2]
+        rand_line.unit = recepie_list[num][1]
+        rand_line.ingriedient = recepie_list[num][2]
         print("yeah boi")
 
     #rand_line.unit = "kg"
@@ -79,5 +88,6 @@ for line in raw_lines:
 
     resetClass()
     num+=1
-print(recepie_list)
+print(*recepie_list)
+###EXPORT SORTED RECEPIE INTO SORTED FILE
 print_to_sorted_file(recepie_list)
