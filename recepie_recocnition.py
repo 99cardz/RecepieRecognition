@@ -21,7 +21,7 @@ def print_to_sorted_file(sorted_list):
     file.seek(0)
     file.truncate()
     for line in sorted_list:
-        file.write(line)
+        file.write(str(line))
         file.write("\n")
     file.close()
 
@@ -50,25 +50,24 @@ recepie_list = file.readlines()
 file.close()
 recepie_list = [line[:-1]for line in recepie_list]
 recepie_list = [line.split()for line in recepie_list]
-#raw_lines = [line[1].lower()for line in raw_lines]
-for line in range(len(recepie_list)):
-    for n in range(line-1):
-        print (n)
-        #raw_lines[n-1].lower()
-print(recepie_list)
+print(*recepie_list)
 
 rand_line = RecepieLine()
 num = 0
-recepie_list = []
+recepie = []
 resetClass()
 for line in recepie_list:
     rand_line.number = num
+    print("line %s" % (num))
 
     if hasNumber(recepie_list[num][0]):
         rand_line.amount = recepie_list[num][0]
+        print("amount at line %s is %s" % (num, recepie_list[num][0]))
         rand_line.ingriedient = recepie_list[num][1]
+        print("ingriedient at line %s is %s" % (num, recepie_list[num][1]))
     elif recepie_list[num][0].lower() in unit_list:
         rand_line.unit = recepie_list[num][0]
+        print("unit at line %s is %s" % (num, recepie_list[num][0]))
         print("no amount detected at line", num)
         rand_line.ingriedient = recepie_list[num][1]
     else:
@@ -79,15 +78,18 @@ for line in recepie_list:
     if len(recepie_list[num]) > 1 and recepie_list[num][1].lower() in unit_list:
 
         rand_line.unit = recepie_list[num][1]
+        print("unit at line %s is %s" % (num, recepie_list[num][1]))
+
         rand_line.ingriedient = recepie_list[num][2]
-        print("yeah boi")
+        print("ingriedient at line %s is %s" % (num, recepie_list[num][2]))
+
 
     #rand_line.unit = "kg"
-
-    recepie_list.append(rand_line.description())
+    print(rand_line.description())
+    recepie.append(rand_line.description())
 
     resetClass()
     num+=1
-print(*recepie_list)
+print(*recepie)
 ###EXPORT SORTED RECEPIE INTO SORTED FILE
-print_to_sorted_file(recepie_list)
+print_to_sorted_file(recepie)
