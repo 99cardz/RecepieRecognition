@@ -35,6 +35,10 @@ def resetClass():
     rand_line.ingriedient = "no_ingredient"
     rand_line.extra = "no_extra"
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> parent of 34d5200... add desired public method
 ### IMPORT UNITS FROM UNIT FILE
 unit_file = open("unit_list.txt")
 unit_list = unit_file.readlines()
