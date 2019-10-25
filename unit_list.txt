@@ -1,6 +1,7 @@
 kg
 g
 l
+el
 ml
 stk.
 stk
@@ -13,3 +14,6 @@ großer
 kleiner
 mittlerer
 kästchen
+Spritzer
+Zehe
+n.b.

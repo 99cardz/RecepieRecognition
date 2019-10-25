@@ -1,1 +1,11 @@
-0: no_amount kg kg no_extra1: no_amount g g no_extra2: no_amount l l no_extra3: no_amount ml ml no_extra4: no_amount stk. stk. no_extra5: no_amount stk stk no_extra6: no_amount etwas etwas no_extra7: no_amount einige einige no_extra8: no_amount no_unit ['Palette'] no_extra9: no_amount no_unit ['Paletten'] no_extra10: no_amount m.-groãÿer m.-groãÿer no_extra11: no_amount großer großer no_extra12: no_amount kleiner kleiner no_extra13: no_amount mittlerer mittlerer no_extra14: no_amount kästchen kästchen no_extra
+0: 4 no_unit Burger no_extra
+1: 8 no_unit Salatblätter no_extra
+2: 2 no_unit Tomaten no_extra
+3: 1 no_unit HIJO no_extra
+4: 1 no_unit reife no_extra
+5: 100 g Naturjoghurt no_extra
+6: 3 spritzer Mayonnaise no_extra
+7: 1 Zehe Knoblauch no_extra
+8: 1 spritzer grüner no_extra
+9: no_amount n.B. Salz, no_extra
+10: no_amount no_unit ['Salz,', 'Pfeffer'] no_extra
