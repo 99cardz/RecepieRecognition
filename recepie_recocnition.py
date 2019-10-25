@@ -35,6 +35,10 @@ def resetClass():
     rand_line.ingriedient = "no_ingredient"
     rand_line.extra = "no_extra"
 
+def recognize(intext, knownUnitList):
+    """public method: hand over a raw text, return a dict of recipe lines"""
+    pass   # to be imolemented
+
 
 ### IMPORT UNITS FROM UNIT FILE
 unit_file = open("unit_list.txt")
