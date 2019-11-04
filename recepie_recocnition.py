@@ -17,13 +17,12 @@ class RecepieLine:
         return desc_str
 
 def print_to_sorted_file(sorted_list):
-    file = open(sorted_file,"w")
-    file.seek(0)
-    file.truncate()
-    for line in sorted_list:
-        file.write(str(line))
-        file.write("\n")
-    file.close()
+    with open(sorted_file,"w") as file:
+        file.seek(0)
+        file.truncate()
+        for line in sorted_list:
+            file.write(str(line))
+            file.write("\n")
 
 def hasNumber(inputStr):
     return any(char.isdigit() for char in inputStr)
@@ -100,8 +99,10 @@ for line in recepie_list:
 
     resetClass()
     num+=1
+##End Main
 
 for line in recepie:
     print(*line)
+
 ###EXPORT SORTED RECEPIE INTO SORTED FILE
 print_to_sorted_file(recepie)
