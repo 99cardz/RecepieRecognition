@@ -35,10 +35,6 @@ def resetClass():
     rand_line.ingriedient = "no_ingredient"
     rand_line.extra = "no_extra"
 
-<<<<<<< HEAD
-=======
-
->>>>>>> parent of 34d5200... add desired public method
 ### IMPORT UNITS FROM UNIT FILE
 with open("unit_list.txt") as unit_file:
     unit_list = unit_file.readlines()
@@ -61,28 +57,27 @@ for line in recepie_list:
     rand_line.number = num
     print("line %s" % (num))
 
+    ##if first object is a number its the amount
     if hasNumber(recepie_list[num][0]):
+        print("first object is a number")
         rand_line.amount = recepie_list[num][0]
         print("amount at line %s is %s" % (num, recepie_list[num][0]))
         rand_line.ingriedient = recepie_list[num][1]
         print("ingriedient at line %s is %s" % (num, recepie_list[num][1]))
+    ##if first object is in unit_list its the unit
     elif recepie_list[num][0].lower() in unit_list:
+        print("first object is in unit_list")
         rand_line.unit = recepie_list[num][0]
         print("unit at line %s is %s" % (num, recepie_list[num][0]))
         print("no amount detected at line", num)
         rand_line.ingriedient = recepie_list[num][1]
+    ##if first object is something else there is no ammount and ingredient is next object/objects
     else:
-        #rand_line.amount = "no_amount"
+        print("first object is something else")
         print("no amount detected at line", num)
+        print("no unit detected at line", num)
+        print("ingriedient at line %s is %s" % (num, [recepie_list[num][i]for i in range(len(recepie_list[num]))]))
         rand_line.ingriedient = [recepie_list[num][i]for i in range(len(recepie_list[num]))]
-
-    if len(recepie_list[num]) > 1 and recepie_list[num][1].lower() in unit_list:
-
-        rand_line.unit = recepie_list[num][1]
-        print("unit at line %s is %s" % (num, recepie_list[num][1]))
-
-        rand_line.ingriedient = recepie_list[num][2]
-        print("ingriedient at line %s is %s" % (num, recepie_list[num][2]))
 
 
     #rand_line.unit = "kg"
@@ -91,6 +86,8 @@ for line in recepie_list:
 
     resetClass()
     num+=1
-print(*recepie)
+
+for line in recepie:
+    print(*line)
 ###EXPORT SORTED RECEPIE INTO SORTED FILE
 print_to_sorted_file(recepie)
