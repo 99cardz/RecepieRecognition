@@ -40,20 +40,19 @@ def resetClass():
 
 >>>>>>> parent of 34d5200... add desired public method
 ### IMPORT UNITS FROM UNIT FILE
-unit_file = open("unit_list.txt")
-unit_list = unit_file.readlines()
-unit_file.close()
-unit_list = [line[:-1]for line in unit_list]
-unit_list = [unit_list[n].lower()for n in range(0,len(unit_list))]
-print(*unit_list)
+with open("unit_list.txt") as unit_file:
+    unit_list = unit_file.readlines()
+    unit_list = [line[:-1]for line in unit_list]
+    unit_list = [unit_list[n].lower()for n in range(0,len(unit_list))]
+    print(*unit_list)
 
 ###IMPORT RECEPIE FROM RECEPIE FILE
-file = open(recepie_file)
-recepie_list = file.readlines()
-file.close()
-recepie_list = [line[:-1]for line in recepie_list]
-recepie_list = [line.split()for line in recepie_list]
-print(*recepie_list)
+with open(recepie_file) as file:
+    recepie_list = file.readlines()
+    recepie_list = [line[:-1]for line in recepie_list]
+    recepie_list = [line.split()for line in recepie_list]
+    print(*recepie_list)
+
 rand_line = RecepieLine()
 num = 0
 recepie = []
