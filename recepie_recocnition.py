@@ -62,15 +62,29 @@ for line in recepie_list:
         print("first object is a number")
         rand_line.amount = recepie_list[num][0]
         print("amount at line %s is %s" % (num, recepie_list[num][0]))
-        rand_line.ingriedient = recepie_list[num][1]
-        print("ingriedient at line %s is %s" % (num, recepie_list[num][1]))
+        if recepie_list[num][1].lower() in unit_list:
+            rand_line.unit = recepie_list[num][1]
+            print("unit at line %s is %s" % (num, recepie_list[num][1]))
+            ingredient = []
+            for i in range(2, len(line)):
+                ingredient.append(line[i])
+            rand_line.ingriedient = ingredient
+        else:
+            ingredient = []
+            for i in range(1, len(line)):
+                ingredient.append(line[i])
+            rand_line.ingriedient = ingredient
+            print("ingredient at line %s is %s" % (num, ingredient))
     ##if first object is in unit_list its the unit
     elif recepie_list[num][0].lower() in unit_list:
         print("first object is in unit_list")
         rand_line.unit = recepie_list[num][0]
         print("unit at line %s is %s" % (num, recepie_list[num][0]))
         print("no amount detected at line", num)
-        rand_line.ingriedient = recepie_list[num][1]
+        ingredient2 = []
+        for i in range(1, len(line)):
+            ingredient2.append(line[i])
+        rand_line.ingriedient = ingredient2
     ##if first object is something else there is no ammount and ingredient is next object/objects
     else:
         print("first object is something else")
