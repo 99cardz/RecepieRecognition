@@ -8,4 +8,4 @@
 7: 1 Zehe ['Knoblauch,', 'Kinder'] no_extra
 8: 1 spritzer ['grüner', 'Tabasco'] no_extra
 9: no_amount n.B. ['Salz,', 'Pfeffer,', 'Olivenöl'] no_extra
-10: no_amount no_unit ['Salz,', 'Pfeffer'] no_extra
+10: no_amount no_unit ['Salz,', 'Pfefferg'] no_extra
