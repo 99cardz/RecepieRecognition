@@ -69,28 +69,41 @@ def readUnitTable():
         print("Units from DB: ", *units)
         return units
 
-def addToDb(ingredient_str):
-    try:
-        sqliteConnection = sqlite3.connect(database)
-        cursor = sqliteConnection.cursor()
-        print("Connected to DB to add ingredient")
-        #ingredient = "h"
-        insert_query = """INSERT INTO Ingredients (ingredient)
-                        VALUES (?);"""
-        cursor.execute(insert_query, ingredient_str)
-        sqliteConnection.commit()
+def addIngredientToDb(ingredient_list):
+    ###Look if there are multiple ingredients or ingredients with more words
+    s = " "
+    ingredients_to_add = [line[]]
+    if len(ingredient_str) > 1:
+        if "," in ingredient_str[0]:
+            ingredients_to_add = ingredient_list.replace(",", "")
 
-        print("inserted ingredient")
+        else:
+            ingredients_to_add.append(s.join(ingredient_list))
+    else:
+        ingredients_to_add = ingredient_list
+    ###add ingredent(s) to database
+    for i in range(len(ingredients_to_add)):
+        try:
+            sqliteConnection = sqlite3.connect(database)
+            cursor = sqliteConnection.cursor()
+            print("Connected to DB to add ingredient")
+            #ingredient = "h"
+            insert_query = """INSERT INTO Ingredients (ingredient)
+                            VALUES (?);"""
+            cursor.execute(insert_query, ingredients_to_add[i-1])
+            sqliteConnection.commit()
 
-        cursor.close()
+            print("inserted ingredient")
 
-    except sqlite3.Error as error:
-        print("error while inserting ingredient: ", error)
+            cursor.close()
 
-    finally:
-        if (sqliteConnection):
-            sqliteConnection.close()
-            print("closed connection to db")
+        except sqlite3.Error as error:
+            print("error while inserting ingredient: ", error)
+
+        finally:
+            if (sqliteConnection):
+                sqliteConnection.close()
+                print("closed connection to db")
 
 def main():
     ### IMPORT UNITS FROM DATABASE TABLE
@@ -151,8 +164,9 @@ def main():
         #print(rand_line.ingredient)
 
         recepie.append(rand_line.description())
-        addToDb(rand_line.ingredient)
+        addIngredientToDb(rand_line.ingredient)
 
+        ##reset everyting
         rand_line.num = 0
         rand_line.amount = "no_amount"
         rand_line.unit = "no_unit"
@@ -160,8 +174,9 @@ def main():
         rand_line.extra = "no_extra"
 
         num+=1
+        ##End For Loop of recepie lines
     return recepie
-##End Main()
+    ##End Main()
 if __name__ == '__main__':
     for line in main():
         print(*line)
