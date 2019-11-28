@@ -9,12 +9,12 @@ database = "sorted_recepies.db"
 
 class RecepieLine:
     number = 0
-    ingriedient = "no_ingredient"
+    ingredient = "no_ingredient"
     unit = "no_unit"
     amount = "no_amount"
     extra = "no_extra"
     def description(self):
-        desc_str = "%s: %s %s %s %s" % (self.number, self.amount, self.unit, self.ingriedient, self.extra)
+        desc_str = "%s: %s %s %s %s" % (self.number, self.amount, self.unit, self.ingredient, self.extra)
         return desc_str
 
 def write_to_db():
@@ -69,8 +69,31 @@ def readUnitTable():
         print("Units from DB: ", *units)
         return units
 
+def addToDb(ingredient_str):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        print("Connected to DB to add ingredient")
+        #ingredient = "h"
+        insert_query = """INSERT INTO Ingredients (ingredient)
+                        VALUES (?);"""
+        cursor.execute(insert_query, ingredient_str)
+        sqliteConnection.commit()
+
+        print("inserted ingredient")
+
+        cursor.close()
+
+    except sqlite3.Error as error:
+        print("error while inserting ingredient: ", error)
+
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+            print("closed connection to db")
+
 def main():
-    ### IMPORT UNITS FROM UNIT FILE
+    ### IMPORT UNITS FROM DATABASE TABLE
     unit_list = readUnitTable()
 
     ###IMPORT RECEPIE FROM RECEPIE FILE
@@ -98,12 +121,12 @@ def main():
                 ingredient = []
                 for i in range(2, len(line)):
                     ingredient.append(line[i])
-                rand_line.ingriedient = ingredient
+                rand_line.ingredient = ingredient
             else:
                 ingredient = []
                 for i in range(1, len(line)):
                     ingredient.append(line[i])
-                rand_line.ingriedient = ingredient
+                rand_line.ingredient = ingredient
                 print("ingredient at line %s is %s" % (num, ingredient))
         ##if first object is in unit_list its the unit
         elif recepie_list[num][0].lower() in unit_list:
@@ -114,26 +137,26 @@ def main():
             ingredient = []
             for i in range(1, len(line)):
                 ingredient.append(line[i])
-            rand_line.ingriedient = ingredient
+            rand_line.ingredient = ingredient
         ##if first object is something else there is no ammount and ingredient is next object/objects
         else:
             print("first object is something else")
             print("no amount detected at line", num)
             print("no unit detected at line", num)
-            print("ingriedient at line %s is %s" % (num, [recepie_list[num][i]for i in range(len(recepie_list[num]))]))
-            rand_line.ingriedient = [recepie_list[num][i]for i in range(len(recepie_list[num]))]
+            print("ingredient at line %s is %s" % (num, [recepie_list[num][i]for i in range(len(recepie_list[num]))]))
+            rand_line.ingredient = [recepie_list[num][i]for i in range(len(recepie_list[num]))]
 
 
         #rand_line.unit = "kg"
-        #print(rand_line.ingriedient)
+        #print(rand_line.ingredient)
 
         recepie.append(rand_line.description())
-
+        addToDb(rand_line.ingredient)
 
         rand_line.num = 0
         rand_line.amount = "no_amount"
         rand_line.unit = "no_unit"
-        rand_line.ingriedient = "no_ingredient"
+        rand_line.ingredient = "no_ingredient"
         rand_line.extra = "no_extra"
 
         num+=1
