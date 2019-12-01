@@ -71,6 +71,8 @@ def readUnitTable():
 
 def addIngredientToDb(ingredient_list):
     ###Look if there are multiple ingredients or ingredients with more words
+    ingredient_list = [ingredient_list[n].lower()for n in range(0,len(ingredient_list))]#lower every word in list
+
     ingredients_to_add = []
     ingredient_buffer = []
     canadd = False
@@ -84,11 +86,15 @@ def addIngredientToDb(ingredient_list):
                 ingredient_buffer.append(ingredient_list[i])
                 canadd = False
             if canadd:
+                if "" in ingredient_buffer:
+                    ingredient_buffer.remove("")
                 ingredients_to_add.append(" ".join(ingredient_buffer))
                 ingredient_buffer = []
         ingredients_to_add.append(" ".join(ingredient_buffer))
     else:
         ingredients_to_add = ingredient_list
+
+    #ingredients_to_add = [ingredients_to_add[n].replace(" ", "") for n in range(0, len(ingredients_to_add))]#jremove empty spaces
     ###add ingredient(s) to database
     print(ingredients_to_add)
     for i in range(len(ingredients_to_add)):
@@ -96,13 +102,12 @@ def addIngredientToDb(ingredient_list):
             sqliteConnection = sqlite3.connect(database)
             cursor = sqliteConnection.cursor()
             print("Connected to DB to add ingredient")
-            #ingredient = "h"
             insert_query = """INSERT INTO Ingredients (ingredient)
                             VALUES (?);"""
-            cursor.execute(insert_query, ingredients_to_add[i-1])
+            insert_value = ingredients_to_add[i]
+            cursor.execute(insert_query, [insert_value],)
             sqliteConnection.commit()
-
-            print("inserted ingredient")
+            print("inserted ingredient * %s *" % (insert_value))
 
             cursor.close()
 
@@ -130,7 +135,7 @@ def main():
     recepie = []
     for line in recepie_list:
         rand_line.number = num
-        print("line %s" % (num))
+        print("********* line %s *********" % (num))
         ingredient = []
         ##if first object is a number its the amount
         if hasNumber(recepie_list[num][0]):
