@@ -168,5 +168,4 @@ def interpretRecepie():
 ###End interpretRecepie()
 if __name__ == '__main__':
     recepie = interpretRecepie()
-    ###EXPORT SORTED RECEPIE INTO SORTED FILE
     print(recepie[9].ingredient_list)
