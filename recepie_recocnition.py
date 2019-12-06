@@ -12,7 +12,7 @@ class RecepieLine:
     unit_str = ""
     amount_str = ""
     def description(self):
-        desc_str = "%s %s %s" % (self.amount, self.unit, self.ingredient)
+        desc_str = "%s %s %s" % (self.amount_str, self.unit_str, self.ingredient_list)
         return desc_str
 
 
@@ -56,29 +56,6 @@ def readUnitTable():
         return units
 
 def addIngredientToDb(ingredient_list):
-    ###Look if there are multiple ingredients or ingredients with more words
-    ingredient_list = [ingredient_list[n].lower()for n in range(0,len(ingredient_list))]#lower every word in list
-
-    ingredients_to_add = []
-    ingredient_buffer = []
-    canadd = False
-
-    if len(ingredient_list) > 1:
-        for i in range(len(ingredient_list)):
-            if "," in ingredient_list[i]:
-                ingredient_buffer.append(ingredient_list[i].replace(",",""))
-                canadd = True
-            else:
-                ingredient_buffer.append(ingredient_list[i])
-                canadd = False
-            if canadd:
-                if "" in ingredient_buffer:
-                    ingredient_buffer.remove("")
-                ingredients_to_add.append(" ".join(ingredient_buffer))
-                ingredient_buffer = []
-        ingredients_to_add.append(" ".join(ingredient_buffer))
-    else:
-        ingredients_to_add = ingredient_list
 
     #ingredients_to_add = [ingredients_to_add[n].replace(" ", "") for n in range(0, len(ingredients_to_add))]#jremove empty spaces
     ###add ingredient(s) to database
@@ -105,47 +82,7 @@ def addIngredientToDb(ingredient_list):
                 sqliteConnection.close()
                 print("closed connection to db")
 def identify_recepie_line():
-    ### IMPORT UNITS FROM DATABASE TABLE
-    unit_list = readUnitTable()
-
-    rand_line.number = num
-    print("********* line %s *********" % (num))
-    ingredient = []
-    ##if first object is a number its the amount
-    if hasNumber(recepie_list[num][0]):
-        print("first object is a number")
-        rand_line.amount = recepie_list[num][0]
-        print("amount at line %s is %s" % (num, recepie_list[num][0]))
-        if recepie_list[num][1].lower() in unit_list:
-            rand_line.unit = recepie_list[num][1]
-            print("unit at line %s is %s" % (num, recepie_list[num][1]))
-            for i in range(2, len(line)):
-                ingredient.append(line[i])
-            rand_line.ingredient = ingredient
-            print("ingredient at line %s is %s" % (num, ingredient))
-        else:
-            for i in range(1, len(line)):
-                ingredient.append(line[i])
-            rand_line.ingredient = ingredient
-            print("ingredient at line %s is %s" % (num, ingredient))
-    ##if first object is in unit_list its the unit
-    elif recepie_list[num][0].lower() in unit_list:
-        print("first object is in unit_list")
-        rand_line.unit = recepie_list[num][0]
-        print("unit at line %s is %s" % (num, recepie_list[num][0]))
-        print("no amount detected at line", num)
-        for i in range(1, len(line)):
-            ingredient.append(line[i])
-        rand_line.ingredient = ingredient
-        print("ingredient at line %s is %s" % (num, ingredient))
-    ##if first object is something else there is no ammount and ingredient is next object/objects
-    else:
-        print("first object is something else")
-        print("no amount detected at line", num)
-        print("no unit detected at line", num)
-        ingredient = [recepie_list[num][i]for i in range(len(recepie_list[num]))]
-        rand_line.ingredient = ingredient
-        print("ingredient at line %s is %s" % (num, ingredient))
+    pass
 
 def importRecepie():
     with open(recepie_file) as file:
@@ -154,6 +91,35 @@ def importRecepie():
         recepie_list = [line.split()for line in recepie_list]
         print(*recepie_list)
     return recepie_list
+
+def interpretIngredient(ingredient_list):
+
+    ingredient_list = [ingredient_list[n].lower()for n in range(0,len(ingredient_list))]#lower every word in list
+
+    ingredients_final = []
+    ingredient_buffer = []
+    canadd = False
+
+    if len(ingredient_list) > 1:
+        for i in range(len(ingredient_list)):
+            if "," in ingredient_list[i]:
+                ingredient_buffer.append(ingredient_list[i].replace(",",""))
+                canadd = True
+            else:
+                ingredient_buffer.append(ingredient_list[i])
+                canadd = False
+            if canadd:
+                if "" in ingredient_buffer:
+                    ingredient_buffer.remove("")
+                ingredients_final.append(" ".join(ingredient_buffer))
+                ingredient_buffer = []
+        ingredients_final.append(" ".join(ingredient_buffer))
+    else:
+        ingredients_final = ingredient_list
+
+    return ingredients_final
+###End interpretIngredient function
+
 def interpretRecepie():
     ### IMPORT UNITS FROM DATABASE TABLE
     unit_list = readUnitTable()
@@ -165,47 +131,42 @@ def interpretRecepie():
 
     line_count = 0
     for line in recepie:
-        print("********* line %s *********" % (num))
+        print("********* line %s *********" % (line_count))
         ingredient_buffer = []
         ##if first object is a number its the amount
         if hasNumber(line[0]):
-            print("first object is a number")
-            recepie_line_list[line_count].amount = line[0]
-            print("amount at line %s is %s" % (line_count, line[0]))
+            recepie_line_list[line_count].amount_str = line[0]
             if line[1].lower() in unit_list:
-                recepie_line_list[line_count].unit = line[1]
-                print("unit at line %s is %s" % (line_count, line[1]))
+                recepie_line_list[line_count].unit_str = line[1]
                 for i in range(2, len(line)):
                     ingredient_buffer.append(line[i])
-                recepie_line_list[line_count].ingredient = ingredient_buffer
-                print("ingredient at line %s is %s" % (line_count, ingredient_buffer))
             else:
                 for i in range(1, len(line)):
                     ingredient_buffer.append(line[i])
-                recepie_line_list[line_count].ingredient = ingredient_buffer
-                print("ingredient at line %s is %s" % (line_count, ingredient_buffer))
         ##if first object is in unit_list its the unit
         elif line[0].lower() in unit_list:
-            print("first object is in unit_list")
-            recepie_line_list[line_count].unit = line[0]
-            print("unit at line %s is %s" % (line_count, line[0]))
-            print("no amount detected at line", num)
+            recepie_line_list[line_count].unit_str = line[0]
+            print("no amount detected at line", line_count)
             for i in range(1, len(line)):
                 ingredient_buffer.append(line[i])
-            recepie_line_list[line_count].ingredient = ingredient_buffer
-            print("ingredient at line %s is %s" % (num, ingredient_buffer))
         ##if first object is something else there is no ammount and ingredient is next object/objects
         else:
-            print("first object is something else")
-            print("no amount detected at line", num)
-            print("no unit detected at line", num)
+            print("no amount detected at line", line_count)
+            print("no unit detected at line", line_count)
             ingredient_buffer = [line[i]for i in range(len(line))]
-            recepie_line_list[line_count].ingredient = ingredient_buffer
-            print("ingredient at line %s is %s" % (num, ingredient_buffer))
-        #addIngredientToDb(rand_line.ingredient)
-        line_count+=1
-        ##End For Loop of recepie lines
-    ##End Main()
-if __name__ == '__main__':
+        #addIngredientToDb(rand_line.ingredient)#
 
+        recepie_line_list[line_count].ingredient_list = interpretIngredient(ingredient_buffer)
+
+        print("amount at line %s : %s" % (line_count, recepie_line_list[line_count].amount_str))
+        print("unit at line %s : %s" % (line_count, recepie_line_list[line_count].unit_str))
+        print("ingredient(s) at line %s : %s" % (line_count, recepie_line_list[line_count].ingredient_list))
+
+        line_count+=1
+    ##End For Loop of recepie lines
+    return recepie_line_list
+###End interpretRecepie()
+if __name__ == '__main__':
+    recepie = interpretRecepie()
     ###EXPORT SORTED RECEPIE INTO SORTED FILE
+    print(recepie[9].ingredient_list)
