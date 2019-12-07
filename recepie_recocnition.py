@@ -8,7 +8,7 @@ unit_file = "unit_list.txt"
 database = "sorted_recepies.db"
 
 class RecepieLine:
-    ingredient_list = ""
+    ingredient_list = []
     unit_str = ""
     amount_str = ""
     def description(self):
@@ -55,22 +55,26 @@ def readUnitTable():
         print("Units from DB: ", *units)
         return units
 
-def addIngredientToDb(ingredient_list):
+def addIngredientsToDb(recepie_class_object):
+    ##retrieve all ingredients from recepie_class_object
+    all_ingredients = []
+    for line in recepie_class_object:
+        for str in line.ingredient_list:
+            all_ingredients.append(str)
 
-    #ingredients_to_add = [ingredients_to_add[n].replace(" ", "") for n in range(0, len(ingredients_to_add))]#jremove empty spaces
-    ###add ingredient(s) to database
-    print(ingredients_to_add)
-    for i in range(len(ingredients_to_add)):
+    print(all_ingredients)
+
+    print("### Inserting all missing Ingredients to Database ###")
+    for ingredient in all_ingredients:
         try:
             sqliteConnection = sqlite3.connect(database)
             cursor = sqliteConnection.cursor()
             print("Connected to DB to add ingredient")
             insert_query = """INSERT INTO Ingredients (ingredient)
                             VALUES (?);"""
-            insert_value = ingredients_to_add[i]
-            cursor.execute(insert_query, [insert_value],)
+            cursor.execute(insert_query, [ingredient],)
             sqliteConnection.commit()
-            print("inserted ingredient * %s *" % (insert_value))
+            print("inserted ingredient * %s *" % (ingredient))
 
             cursor.close()
 
@@ -81,8 +85,8 @@ def addIngredientToDb(ingredient_list):
             if (sqliteConnection):
                 sqliteConnection.close()
                 print("closed connection to db")
-def identify_recepie_line():
-    pass
+    print("### Finished adding all non existing Ingredients to Database ###")
+###End addIngredientsToDb
 
 def importRecepie():
     with open(recepie_file) as file:
@@ -91,9 +95,10 @@ def importRecepie():
         recepie_list = [line.split()for line in recepie_list]
         print(*recepie_list)
     return recepie_list
+###End inport Recepie()
 
 def interpretIngredient(ingredient_list):
-
+    ###see if there are ingredients with multiple words
     ingredient_list = [ingredient_list[n].lower()for n in range(0,len(ingredient_list))]#lower every word in list
 
     ingredients_final = []
@@ -169,3 +174,5 @@ def interpretRecepie():
 if __name__ == '__main__':
     recepie = interpretRecepie()
     print(recepie[9].ingredient_list)
+
+    addIngredientsToDb(recepie)
