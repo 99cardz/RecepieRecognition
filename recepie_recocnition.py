@@ -3,9 +3,9 @@ import sys
 
 sorted_file = "sorted.txt"
 recepie_file = "recepie.txt"
-unit_file = "unit_list.txt"
 
-database = "sorted_recepies.db"
+data_database = "recepie_data.db"
+recepie_database = "recepies.db"
 
 class RecepieLine:
     ingredient_list = []
@@ -27,21 +27,13 @@ def print_to_sorted_file(sorted_list):
 def hasNumber(inputStr):
     return any(char.isdigit() for char in inputStr)
 
-def readUnitFile():
-    with open(unit_file) as file:
-        unit_list = file.readlines()
-        unit_list = [line[:-1]for line in unit_list]
-        unit_list = [unit_list[n].lower()for n in range(0,len(unit_list))]
-        print(*unit_list)
-    return unit_list
-
 def readUnitTable():
     try:
-        sqliteConnection = sqlite3.connect(database)
+        sqliteConnection = sqlite3.connect(data_database)
         cursor = sqliteConnection.cursor()
         print("Connected to DB to retrieve Units")
 
-        cursor.execute("""SELECT * from Units""")
+        cursor.execute("""SELECT * from units_table""")
         records = cursor.fetchall()
         units = []
         for row in records:
@@ -62,15 +54,15 @@ def addIngredientsToDb(recepie_class_object):
         for str in line.ingredient_list:
             all_ingredients.append(str)
 
-    print(all_ingredients)
+    #print(all_ingredients)
 
     print("### Inserting all missing Ingredients to Database ###")
     for ingredient in all_ingredients:
         try:
-            sqliteConnection = sqlite3.connect(database)
+            sqliteConnection = sqlite3.connect(data_database)
             cursor = sqliteConnection.cursor()
             print("Connected to DB to add ingredient")
-            insert_query = """INSERT INTO Ingredients (ingredient)
+            insert_query = """INSERT INTO ingredients_table (ingredient)
                             VALUES (?);"""
             cursor.execute(insert_query, [ingredient],)
             sqliteConnection.commit()
@@ -136,7 +128,6 @@ def interpretRecepie():
 
     line_count = 0
     for line in recepie:
-        print("********* line %s *********" % (line_count))
         ingredient_buffer = []
         ##if first object is a number its the amount
         if hasNumber(line[0]):
@@ -151,28 +142,51 @@ def interpretRecepie():
         ##if first object is in unit_list its the unit
         elif line[0].lower() in unit_list:
             recepie_line_list[line_count].unit_str = line[0]
-            print("no amount detected at line", line_count)
             for i in range(1, len(line)):
                 ingredient_buffer.append(line[i])
         ##if first object is something else there is no ammount and ingredient is next object/objects
         else:
-            print("no amount detected at line", line_count)
-            print("no unit detected at line", line_count)
             ingredient_buffer = [line[i]for i in range(len(line))]
         #addIngredientToDb(rand_line.ingredient)#
 
         recepie_line_list[line_count].ingredient_list = interpretIngredient(ingredient_buffer)
-
-        print("amount at line %s : %s" % (line_count, recepie_line_list[line_count].amount_str))
-        print("unit at line %s : %s" % (line_count, recepie_line_list[line_count].unit_str))
-        print("ingredient(s) at line %s : %s" % (line_count, recepie_line_list[line_count].ingredient_list))
-
         line_count+=1
     ##End For Loop of recepie lines
     return recepie_line_list
 ###End interpretRecepie()
+
+def addRecepieToDb(recepie):
+    try:
+        sqliteConnection = sqlite3.connect(recepie_database)
+        cursor = sqliteConnection.cursor()
+        print("Connected to recepie DB to add recepie")
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        #print(cursor.fetchall())
+        id = len(cursor.fetchall())+1 ##Create new Table ID
+        print("creating new table with id:", id)
+        cursor.execute("""CREATE TABLE "%s" (
+	               `amount`	TEXT,
+	               `unit`	TEXT,
+	               `ingredient`	TEXT);"""%id) ## creating new Table for recepies
+
+
+    except sqlite3.Error as error:
+        print("error while inserting recepie: ", error)
+
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+            print("closed connection to db")
+###End addRecepieToDb()
+
+"""def getIngredientID(ingredient_str):
+    try:
+        sqliteConnection = sqlite3.connect(data_database)
+        cursor = sqliteConnection.cursor()
+        print("Connected to recepie DB to retrieve ingredient ID of: %s" % (ingredient_str))
+        """
 if __name__ == '__main__':
     recepie = interpretRecepie()
-    print(recepie[9].ingredient_list)
 
-    addIngredientsToDb(recepie)
+    for line in recepie:
+        print(line.description())
