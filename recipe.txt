@@ -1,7 +1,7 @@
 4                 Burger Brötchen
-8                 Salatblätter
+0,1 kg Salatblätter
 2                 Tomaten, Petersilie klein
-1                 HIJO
+1      l Wasser
 1                 reife Avocado
 100 g         Naturjoghurt
 3 spritzer           Mayonnaise

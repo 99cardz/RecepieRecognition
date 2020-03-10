@@ -2,12 +2,13 @@ import sqlite3
 import sys
 
 sorted_file = "sorted.txt"
-recepie_file = "recepie.txt"
+recipe_file = "recipe.txt"
 unit_file = "unit_list.txt"
 
-database = "sorted_recepies.db"
+data_database = "recipe_data.db"
+recipe_database = "recipes.db"
 
-class RecepieLine:
+class recipeLine:
     ingredient_list = []
     unit_str = ""
     amount_str = ""
@@ -37,11 +38,11 @@ def readUnitFile():
 
 def readUnitTable():
     try:
-        sqliteConnection = sqlite3.connect(database)
+        sqliteConnection = sqlite3.connect(data_database)
         cursor = sqliteConnection.cursor()
         print("Connected to DB to retrieve Units")
 
-        cursor.execute("""SELECT * from Units""")
+        cursor.execute("""SELECT * from units_table""")
         records = cursor.fetchall()
         units = []
         for row in records:
@@ -55,10 +56,10 @@ def readUnitTable():
         print("Units from DB: ", *units)
         return units
 
-def addIngredientsToDb(recepie_class_object):
-    ##retrieve all ingredients from recepie_class_object
+def addIngredientsToDb(recipe_class_object):
+    ##retrieve all ingredients from recipe_class_object
     all_ingredients = []
-    for line in recepie_class_object:
+    for line in recipe_class_object:
         for str in line.ingredient_list:
             all_ingredients.append(str)
 
@@ -67,10 +68,10 @@ def addIngredientsToDb(recepie_class_object):
     print("### Inserting all missing Ingredients to Database ###")
     for ingredient in all_ingredients:
         try:
-            sqliteConnection = sqlite3.connect(database)
+            sqliteConnection = sqlite3.connect(data_database)
             cursor = sqliteConnection.cursor()
             print("Connected to DB to add ingredient")
-            insert_query = """INSERT INTO Ingredients (ingredient)
+            insert_query = """INSERT INTO ingredient_table (ingredient)
                             VALUES (?);"""
             cursor.execute(insert_query, [ingredient],)
             sqliteConnection.commit()
@@ -88,14 +89,14 @@ def addIngredientsToDb(recepie_class_object):
     print("### Finished adding all non existing Ingredients to Database ###")
 ###End addIngredientsToDb
 
-def importRecepie():
-    with open(recepie_file) as file:
-        recepie_list = file.readlines()
-        recepie_list = [line[:-1]for line in recepie_list]
-        recepie_list = [line.split()for line in recepie_list]
-        print(*recepie_list)
-    return recepie_list
-###End inport Recepie()
+def importrecipe():
+    with open(recipe_file) as file:
+        recipe_list = file.readlines()
+        recipe_list = [line[:-1]for line in recipe_list]
+        recipe_list = [line.split()for line in recipe_list]
+        print(*recipe_list)
+    return recipe_list
+###End inport recipe()
 
 def interpretIngredient(ingredient_list):
     ###see if there are ingredients with multiple words
@@ -125,24 +126,24 @@ def interpretIngredient(ingredient_list):
     return ingredients_final
 ###End interpretIngredient function
 
-def interpretRecepie():
+def interpretrecipe():
     ### IMPORT UNITS FROM DATABASE TABLE
     unit_list = readUnitTable()
 
-    ###IMPORT RECEPIE FROM RECEPIE FILE
-    recepie = importRecepie()
+    ###IMPORT recipe FROM recipe FILE
+    recipe = importrecipe()
 
-    recepie_line_list = [RecepieLine() for i in range(len(recepie))]
+    recipe_line_list = [recipeLine() for i in range(len(recipe))]
 
     line_count = 0
-    for line in recepie:
+    for line in recipe:
         print("********* line %s *********" % (line_count))
         ingredient_buffer = []
         ##if first object is a number its the amount
         if hasNumber(line[0]):
-            recepie_line_list[line_count].amount_str = line[0]
+            recipe_line_list[line_count].amount_str = line[0]
             if line[1].lower() in unit_list:
-                recepie_line_list[line_count].unit_str = line[1]
+                recipe_line_list[line_count].unit_str = line[1]
                 for i in range(2, len(line)):
                     ingredient_buffer.append(line[i])
             else:
@@ -150,7 +151,7 @@ def interpretRecepie():
                     ingredient_buffer.append(line[i])
         ##if first object is in unit_list its the unit
         elif line[0].lower() in unit_list:
-            recepie_line_list[line_count].unit_str = line[0]
+            recipe_line_list[line_count].unit_str = line[0]
             print("no amount detected at line", line_count)
             for i in range(1, len(line)):
                 ingredient_buffer.append(line[i])
@@ -161,18 +162,18 @@ def interpretRecepie():
             ingredient_buffer = [line[i]for i in range(len(line))]
         #addIngredientToDb(rand_line.ingredient)#
 
-        recepie_line_list[line_count].ingredient_list = interpretIngredient(ingredient_buffer)
+        recipe_line_list[line_count].ingredient_list = interpretIngredient(ingredient_buffer)
 
-        print("amount at line %s : %s" % (line_count, recepie_line_list[line_count].amount_str))
-        print("unit at line %s : %s" % (line_count, recepie_line_list[line_count].unit_str))
-        print("ingredient(s) at line %s : %s" % (line_count, recepie_line_list[line_count].ingredient_list))
+        print("amount at line %s : %s" % (line_count, recipe_line_list[line_count].amount_str))
+        print("unit at line %s : %s" % (line_count, recipe_line_list[line_count].unit_str))
+        print("ingredient(s) at line %s : %s" % (line_count, recipe_line_list[line_count].ingredient_list))
 
         line_count+=1
-    ##End For Loop of recepie lines
-    return recepie_line_list
-###End interpretRecepie()
+    ##End For Loop of recipe lines
+    return recipe_line_list
+###End interpretrecipe()
 if __name__ == '__main__':
-    recepie = interpretRecepie()
-    print(recepie[9].ingredient_list)
+    recipe = interpretrecipe()
+    print(recipe[9].ingredient_list)
 
-    addIngredientsToDb(recepie)
+    addIngredientsToDb(recipe)
