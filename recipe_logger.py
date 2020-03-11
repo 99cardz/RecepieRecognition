@@ -28,14 +28,6 @@ def print_to_sorted_file(sorted_list):
 def hasNumber(inputStr):
     return any(char.isdigit() for char in inputStr)
 
-def readUnitFile():
-    with open(unit_file) as file:
-        unit_list = file.readlines()
-        unit_list = [line[:-1]for line in unit_list]
-        unit_list = [unit_list[n].lower()for n in range(0,len(unit_list))]
-        print(*unit_list)
-    return unit_list
-
 def readUnitTable():
     try:
         sqliteConnection = sqlite3.connect(data_database)
@@ -173,11 +165,14 @@ def interpretrecipe():
     return recipe_line_list
 ###End interpretrecipe()
 
-def addRecipeToDb(recepie_class_object):
-    pass
+def addRecipeToDb(recipe_class_object):
     ##retrieve Ingredient ID:
+    for i in range(len(recipe_class_object)):
+        for ingredient in recipe_class_object[i].ingredient_list:
+            retrieveIngredientID(ingredient)
 ##End addRecipeToDb()
 def retrieveIngredientID(ingredient_str):
+    ingredient_ID = 0
     try:
         sqliteConnection = sqlite3.connect(data_database)
         cursor = sqliteConnection.cursor()
@@ -185,22 +180,27 @@ def retrieveIngredientID(ingredient_str):
         query = """SELECT * from ingredient_table"""
         cursor.execute(query)
         records = cursor.fetchall()
-        #print(records)
         for row in records:
-            print(row)
+            #print(row)
             if row[1] == ingredient_str:
+                ingredient_ID = row[0]
                 print("Ingredient ID of %s is %s" %(ingredient_str, row[0]))
                 break
+        if ingredient_ID == 0:
+            print("############# Ingredient %s not found int Database #############" % (ingredient_str))
+
     except:
         print("error")
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
                 print("closed connection to db")
+        return ingredient_str
+###End retrieveIngredientID()
 if __name__ == '__main__':
-    #recipe = interpretrecipe()
+    recipe = interpretrecipe()
     #print(recipe[9].ingredient_list)
 
     #addIngredientsToDb(recipe)
 
-    retrieveIngredientID("burger brötchen")
+    addRecipeToDb(recipe)
