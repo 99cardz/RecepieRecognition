@@ -172,8 +172,35 @@ def interpretrecipe():
     ##End For Loop of recipe lines
     return recipe_line_list
 ###End interpretrecipe()
-if __name__ == '__main__':
-    recipe = interpretrecipe()
-    print(recipe[9].ingredient_list)
 
-    addIngredientsToDb(recipe)
+def addRecipeToDb(recepie_class_object):
+    pass
+    ##retrieve Ingredient ID:
+##End addRecipeToDb()
+def retrieveIngredientID(ingredient_str):
+    try:
+        sqliteConnection = sqlite3.connect(data_database)
+        cursor = sqliteConnection.cursor()
+        print("Connected to %s to retrieve ID for : %s" % (data_database, ingredient_str))
+        query = """SELECT * from ingredient_table"""
+        cursor.execute(query)
+        records = cursor.fetchall()
+        #print(records)
+        for row in records:
+            print(row)
+            if row[1] == ingredient_str:
+                print("Ingredient ID of %s is %s" %(ingredient_str, row[0]))
+                break
+    except:
+        print("error")
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+                print("closed connection to db")
+if __name__ == '__main__':
+    #recipe = interpretrecipe()
+    #print(recipe[9].ingredient_list)
+
+    #addIngredientsToDb(recipe)
+
+    retrieveIngredientID("burger brötchen")
