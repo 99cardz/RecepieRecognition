@@ -118,7 +118,7 @@ def interpretIngredient(ingredient_list):
     return ingredients_final
 ###End interpretIngredient function
 
-def interpretrecipe():
+def interpretRecipe():
     ### IMPORT UNITS FROM DATABASE TABLE
     unit_list = readUnitTable()
 
@@ -163,13 +163,32 @@ def interpretrecipe():
         line_count+=1
     ##End For Loop of recipe lines
     return recipe_line_list
-###End interpretrecipe()
+###End interpretRecipe()
 
 def addRecipeToDb(recipe_class_object):
     ##retrieve Ingredient ID:
+    try:
+        sqliteConnection = sqlite3.connect(recipe_database)
+        cursor = sqliteConnection.cursor()
+        cursor.execute("""SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence';""")
+        recipeID = cursor.fetchone()[0]
+        print(recipeID)
+        cursor.execute("""CREATE TABLE Recipe%s(
+            amount TEXT,
+            unit INTEGER,
+            ingredient INTEGER
+        )"""%recipeID)
+    except sqlite3.Error as error:
+            print(error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+                print("closed connection to db")
     for i in range(len(recipe_class_object)):
         for ingredient in recipe_class_object[i].ingredient_list:
             retrieveIngredientID(ingredient)
+
+
 ##End addRecipeToDb()
 def retrieveIngredientID(ingredient_str):
     ingredient_ID = 0
@@ -198,7 +217,7 @@ def retrieveIngredientID(ingredient_str):
         return ingredient_str
 ###End retrieveIngredientID()
 if __name__ == '__main__':
-    recipe = interpretrecipe()
+    recipe = interpretRecipe()
     #print(recipe[9].ingredient_list)
 
     #addIngredientsToDb(recipe)
