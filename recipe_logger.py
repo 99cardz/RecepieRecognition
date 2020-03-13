@@ -1,9 +1,7 @@
 import sqlite3
 import sys
 
-sorted_file = "sorted.txt"
 recipe_file = "recipe.txt"
-unit_file = "unit_list.txt"
 
 data_database = "recipe_data.db"
 recipe_database = "recipes.db"
@@ -16,14 +14,6 @@ class recipeLine:
         desc_str = "%s %s %s" % (self.amount_str, self.unit_str, self.ingredient_list)
         return desc_str
 
-
-def print_to_sorted_file(sorted_list):
-    with open(sorted_file,"w") as file:
-        file.seek(0)
-        file.truncate()
-        for line in sorted_list:
-            file.write(str(line))
-            file.write("\n")
 
 def hasNumber(inputStr):
     return any(char.isdigit() for char in inputStr)
@@ -162,31 +152,38 @@ def interpretRecipe():
 
         line_count+=1
     ##End For Loop of recipe lines
+    print("+++++++++++++++++++++++++++++++")
     return recipe_line_list
 ###End interpretRecipe()
 
 def addRecipeToDb(recipe_class_object):
+    print(recipe_class_object[0].unit_str)
     ##retrieve Ingredient ID:
     try:
         sqliteConnection = sqlite3.connect(recipe_database)
         cursor = sqliteConnection.cursor()
         cursor.execute("""SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence';""")
         recipeID = cursor.fetchone()[0]
-        print(recipeID)
+        #print(recipeID)
         cursor.execute("""CREATE TABLE Recipe%s(
             amount TEXT,
             unit INTEGER,
             ingredient INTEGER
         )"""%recipeID)
+        for i in range(len(recipe_class_object)):
+            for ingredient in recipe_class_object[i].ingredient_list:
+                ingredientID = retrieveIngredientID(ingredient)
+                insert_query = """INSERT INTO Recipe%s (amount, unit, ingredient) VALUES (?,?,?);"""%recipeID
+                cursor.execute(insert_query, [recipe_class_object[i].amount_str, recipe_class_object[i].unit_str, ingredientID])
+                sqliteConnection.commit()
+                print("inserted %s"%ingredient)
+                print(recipe_class_object[i].unit_str)
     except sqlite3.Error as error:
             print(error)
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
                 print("closed connection to db")
-    for i in range(len(recipe_class_object)):
-        for ingredient in recipe_class_object[i].ingredient_list:
-            retrieveIngredientID(ingredient)
 
 
 ##End addRecipeToDb()
@@ -214,11 +211,11 @@ def retrieveIngredientID(ingredient_str):
         if (sqliteConnection):
                 sqliteConnection.close()
                 print("closed connection to db")
-        return ingredient_str
+        return ingredient_ID
 ###End retrieveIngredientID()
 if __name__ == '__main__':
     recipe = interpretRecipe()
-    #print(recipe[9].ingredient_list)
+    #print(recipe[0].amount_str)
 
     #addIngredientsToDb(recipe)
 
