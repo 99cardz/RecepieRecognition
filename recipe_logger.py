@@ -213,8 +213,16 @@ def retrieveIngredientID(ingredient_str):
                 print("closed connection to db")
         return ingredient_ID
 ###End retrieveIngredientID()
+
+def retrieveRecipeOnline():
+    pass
+###End retrieveRecipeOnline()
+
 if __name__ == '__main__':
-    recipe = interpretRecipe()
+    raw_recipe = retrieveRecipeOnline()
+
+    recipe = interpretRecipe(raw_recipe)
+
     #print(recipe[0].amount_str)
 
     #addIngredientsToDb(recipe)
