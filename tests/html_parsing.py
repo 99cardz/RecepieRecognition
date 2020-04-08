@@ -8,36 +8,8 @@ html = BeautifulSoup(raw_html.content, 'html.parser')
 
 #print(html)
 
-go = False
+print(html.find(itemprop="articleBody").text.split())
 
-recipe = []
-for p in html.select("span"):
-	if p.text == "Zutaten":
-#		print("start")
-		go = True
-	if p.text == "Zubereitung":
-#		print("stop")
-		go = False
-	if go is True:
-		print(unicodedata.normalize("NFKD",p.text))
-		recipe.append(unicodedata.normalize("NFKD", p.text))
-#	print(p.text)
-#    if p['id'] == 'walrus':
-#        print(p.text)
-
-print(recipe)
-print(*recipe)
-for i in range(2):
-	del(recipe[0])
-
-for line in recipe:
-	print(line)
-
-print(recipe[1])
-
-
-with open("test.txt", "w") as file:
-	for line in recipe:
-		file.write(line)
-		file.write("\n")
-
+for item in html.find(itemprop="articleBody"):
+	print(type(item))
+	print("hi")

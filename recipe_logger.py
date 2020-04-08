@@ -126,9 +126,9 @@ def interpretRecipe(recipe):
 
     line_count = 0
     for line in recipe:
-        print(line[0])
-        print(line)
-        print(type(line))
+        #print(line[0])
+        #print(line)
+        #print(type(line))
         #print("********* line %s *********" % (line_count))
         ingredient_buffer = []
         ##if first object is a number its the amount
@@ -251,14 +251,162 @@ def retrieveRecipeOnline(url_str):
     return recipe
 ###End retrieveRecipeOnline()
 
-if __name__ == '__main__':
-    raw_recipe = retrieveRecipeOnline("https://schönegge.de/index.php/wir-bieten/rezepte/290-bananen-tiramisu")
-    print(raw_recipe)
+def importUrls(file):
+    list = []
+    with open(file, "r") as file:
+        raw_lines = file.readlines()
+        for line in raw_lines:
+            list.append(line.replace("\n", ""))
+    return list
+##End importUrls()
 
-    recipe = interpretRecipe(raw_recipe)
+def processRecipe(recipe, database, url):
+
+    recipe_id = addNewRecipeTable(url, database)
+
+    known_units = getKnownUnits(database)
+    known_ingredients = getKnownIngredients(database)
+    recipe_dict = {}
+
+    for line in recipe:
+        print("> next line")
+
+        amount = ""
+        unit = ""
+        ingredient = []
+
+        line_list = line.split()
+        line_list = [line_list[n].lower()for n in range(0,len(line_list))]
+
+        item_buffer = []
+        for item in line_list:
+            if hasNumber(item):
+                split_item = list(item)
+                go_ahead = True
+                for i in split_item:
+                    if not i.isdigit():
+                        go_ahead = False
+                if go_ahead:
+                    amount = item
+            elif item in known_ingredients:
+                ingredient.append(item)
+            elif item in known_units:
+                unit = item
+            else:
+                print("item %s not known!" %item)
+                input_str = input("Choose i,u,o,a for ingredient, unit, other or ammount. If something is joined then add j.")
+                if "j" in input_str:
+                    item_buffer.append(item)
+                else:
+                    item_buffer.append(item)
+                    if input_str is "i":
+                        ingredient.append(" ".join(item_buffer))
+                        item_buffer = []
+                        known_ingredients.append(ingredient)
+                    elif input_str is "u":
+                        unit = " ".join(item_buffer)
+                        item_buffer = []
+                        known_units.append(unit)
+                    elif input_str is "o":
+                        print("nothing happens here yet!")
+                    elif input is "a":
+                        amount = str(input("what does the unknown translate to?"))
+        #add amount, ingredient and unit of line to recipe table of database
+        addLineToRecipeTable(amount, unit, ingredient, recipe_id, database)
+        print("added line to db")
+def addLineToRecipeTable(amount, unit, ingredient, recipe_id, database):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        query = """INSERT INTO R%s (amount, unit_id, ingredient_id) VALUES (?,?,?);"""%recipe_id
+        cursor.execute(query, (amount, 1, 3))
+    except sqlite3.Error as error:
+        print("!!!!!!!!!error while adding Recipe Table\n", error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+def addNewRecipeTable(url, database):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        cursor.execute("""SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' ;""")#AND name !='units_table' AND name != 'ingredient_table' AND name != 'source_table';""")
+        recipeID = cursor.fetchone()[0]
+        print(recipeID)
+        cursor.execute("""CREATE TABLE R%s(
+            amount TEXT,
+            unit_id INTEGER,
+            ingredient_id INTEGER;
+        )"""%recipeID)
+        query = """INSERT INTO sources_table (recipe_id, source) VALUES (?,?);"""
+        cursor.execute(query, (recipeID, url))
+    except sqlite3.Error as error:
+        print("!!!!!!!!!error while adding Recipe Table\n", error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+    return recipeID
+def getKnownUnits(database):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+
+        query = """SELECT * from units_table;"""
+        cursor.execute(query)
+        records = cursor.fetchall()
+        units = []
+        for item in records:
+            units.append(item[1])
+    except sqlite3.Error as error:
+        print(error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+        print(units, type(units))
+        return units
+##ENd getKnownUnits()
+
+def getKnownIngredients(database):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+
+        query = """SELECT * from ingredients_table;"""
+        cursor.execute(query)
+        records = cursor.fetchall()
+        ingredients = []
+        for item in records:
+            ingredients.append(item[1])
+    except sqlite3.Error as error:
+        print(error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+        print(ingredients, type(ingredients))
+        return ingredients
+
+if __name__ == '__main__':
+
+    recipe_database = "schoenegge_rezepte.db"
+    url_list = importUrls("urls.txt")
+
+    for url in url_list:
+
+        ### >> need check for url/recipe already existing!!!!!
+
+        print(">>> now processing ", url)
+        raw_recipe = retrieveRecipeOnline(url)
+        recipe = processRecipe(raw_recipe, recipe_database, url)
+
+        #addUrlToDb(recipe_database,url)
+
+        #addRecipeToDb(recipe_database, recipe)
+    #raw_recipe = retrieveRecipeOnline("https://schönegge.de/index.php/wir-bieten/rezepte/290-bananen-tiramisu")
+    #print(raw_recipe)
+
+    #recipe = interpretRecipe(raw_recipe)
 
     #print(recipe[0].amount_str)
 
-    addIngredientsToDb(recipe)
+    #addIngredientsToDb(recipe)
 
-    addRecipeToDb(recipe)
+    #addRecipeToDb(recipe)
