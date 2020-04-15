@@ -6,15 +6,19 @@ https://schönegge.de/index.php/wir-bieten/rezepte/121-auberginen-tomaten-avocad
 https://schönegge.de/index.php/wir-bieten/rezepte/76-auberginenschnitzel-mit-sahnekohlrabi
 https://schönegge.de/index.php/wir-bieten/rezepte/131-austernpilze-gebacken
 https://schönegge.de/index.php/wir-bieten/rezepte/290-bananen-tiramisu
+https://schönegge.de/index.php/wir-bieten/rezepte/419-blaukraut-mit-granatapfel-zimt-und-honig
 https://schönegge.de/index.php/wir-bieten/rezepte/273-blaukraut-cremesuppe
 https://schönegge.de/index.php/wir-bieten/rezepte/214-blaukraut-tarte
 https://schönegge.de/index.php/wir-bieten/rezepte/129-blaukraut-knoedel-auflauf
+https://schönegge.de/index.php/wir-bieten/rezepte/355-blaukraut-kokos-salat
 https://schönegge.de/index.php/wir-bieten/rezepte/91-blaukraut-lasagne
 https://schönegge.de/index.php/wir-bieten/rezepte/185-blaukraut-strudel
 https://schönegge.de/index.php/wir-bieten/rezepte/95-blaukrautsalat-fruchtig
+https://schönegge.de/index.php/wir-bieten/rezepte/401-blaukrautsalat-lauwarm
 https://schönegge.de/index.php/wir-bieten/rezepte/297-blumenkohl-paniert-mit-gebackenen-kartoffeleiern-und-lauchdip
 https://schönegge.de/index.php/wir-bieten/rezepte/112-vegetarische-thai-bolognese-mit-blumenkohl
 https://schönegge.de/index.php/wir-bieten/rezepte/152-blumenkohl-brokkoli-gratin
+https://schönegge.de/index.php/wir-bieten/rezepte/400-blumenkohl-mangold-pfanne-mit-erdnusssauce
 https://schönegge.de/index.php/wir-bieten/rezepte/134-penne-mit-blumenkohl
 https://schönegge.de/index.php/wir-bieten/rezepte/437-blumenkohl-sellerie-gemuese
 https://schönegge.de/index.php/wir-bieten/rezepte/326-paprika-gurken-suppe
@@ -23,6 +27,7 @@ https://schönegge.de/index.php/wir-bieten/rezepte/269-zucchini-bohnen-paeckchen
 https://schönegge.de/index.php/wir-bieten/rezepte/373-bohnen-moehren-gemuese
 https://schönegge.de/index.php/wir-bieten/rezepte/196-bohnen-paprika-salat
 https://schönegge.de/index.php/wir-bieten/rezepte/102-bohnen-zuckermais-tomaten-fuellung-in-pfannkuchen
+https://schönegge.de/index.php/wir-bieten/rezepte/320-bohnengratin-mit-schafskaese
 https://schönegge.de/index.php/wir-bieten/rezepte/325-bohnengulasch-vegetarisch-2
 https://schönegge.de/index.php/wir-bieten/rezepte/94-bohnengulasch-vegetarisch
 https://schönegge.de/index.php/wir-bieten/rezepte/190-bohnensuppe-piroschka

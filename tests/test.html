@@ -1,0 +1,1009 @@
+
+
+<script>
+
+  function cfErrorCheck(id, value) {
+
+    if (value == "") {
+      jQuery(id).css('background', 'red');
+      jQuery(id).css('color', 'white');
+      return false;
+    } else {
+      jQuery(id).css('background', 'white');
+      jQuery(id).css('color', 'black');
+      return true;
+    }
+  }
+
+  function sendAboForm() {
+
+    var name = jQuery('#cfname').val();
+    var street = jQuery('#cfstreet').val();
+    var plz = jQuery('#cfpostcode').val();
+    var ortschaft = jQuery('#cfcity').val();
+    var telefon = jQuery('#cftel').val();
+    var mail = jQuery('#cfmail').val();
+    var radioActive = jQuery("input[name='abotype']:checked").val();
+
+    if (cfErrorCheck('#cfname', name) &&
+            cfErrorCheck('#cfstreet', street) &&
+            cfErrorCheck('#cfpostcode', plz) &&
+            cfErrorCheck('#cfcity', ortschaft) &&
+            cfErrorCheck('#cftel', telefon) &&
+            cfErrorCheck('#cfmail', mail)) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  function sendWerbeForm() {
+
+    var bestname = jQuery('#bestname').val();
+    var bestkdnr = jQuery('#bestkdnr').val();
+    var werbname = jQuery('#werbname').val();
+    var werbstreet = jQuery('#werbstreet').val();
+    var werbpostcode = jQuery('#werbpostcode').val();
+    var mail = jQuery('#werbmail').val();
+
+    var radioActive = jQuery("input[name='presentType']:checked").val();
+
+    if (cfErrorCheck('#bestname', bestname) &&
+            cfErrorCheck('#bestkdnr', bestkdnr) &&
+            cfErrorCheck('#werbname', werbname) &&
+            cfErrorCheck('#werbstreet', werbstreet) &&
+            cfErrorCheck('#werbpostcode', werbpostcode) &&
+            cfErrorCheck('#werbmail', werbmail))
+    {
+      return true;
+    } else {
+      return false;
+    }
+  }
+</script>
+
+
+
+
+
+<!doctype html>
+<html xml:lang="de-de" lang="de-de" >
+<head>
+
+	
+	
+
+
+	
+	
+	
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		
+    <base href="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/287-asia-salat-penne%0a" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="Lena" />
+	<meta name="description" content="Biogärtnerei in Freising mit Ökobox Lieferservice • Bio Gemüse &amp; Bio Obst • Ökokisten Versand" />
+	<meta name="generator" content="Joomla! - Open Source Content Management" />
+	<title>Asia-Salat-Penne</title>
+	<link href="/index.php/wir-bieten/rezepte/favicon.ico" rel="shortcut icon" type="image/vnd.microsoft.icon" />
+	<link href="/index.php/wir-bieten/rezepte/templates/gantry/css-compiled/menu-ef37bd44844c9b2ecea737e392acccd6.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/libraries/gantry/css/grid-responsive.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/templates/gantry/css-compiled/bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/templates/gantry/css-compiled/master-0bb704ef3b143110d95e01cd543ef468.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/templates/gantry/css-compiled/mediaqueries.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/modules/mod_roknavmenu/themes/fusion/css/fusion.css" rel="stylesheet" type="text/css" />
+	<link href="/index.php/wir-bieten/rezepte/plugins/content/jw_allvideos/jw_allvideos/tmpl/Classic/css/template.css?v=6.0.0" rel="stylesheet" type="text/css" />
+	<link href="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/media/com_uniterevolution/assets/rs-plugin/css/settings.css" rel="stylesheet" type="text/css" />
+	<link href="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/media/com_uniterevolution/assets/rs-plugin/css/captions.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+
+	</style>
+	<script type="application/json" class="joomla-script-options new">{"csrf.token":"7bc3431b87dfe9760564d42849ebba87","system.paths":{"root":"\/index.php\/wir-bieten\/rezepte","base":"\/index.php\/wir-bieten\/rezepte"}}</script>
+	<script src="/index.php/wir-bieten/rezepte/media/jui/js/jquery.min.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/jui/js/jquery-noconflict.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/jui/js/jquery-migrate.min.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/system/js/caption.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/jui/js/bootstrap.min.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/system/js/mootools-core.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/system/js/core.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/media/system/js/mootools-more.js?56ae2474536993b1189f0ba0b5a300b6" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/libraries/gantry/js/browser-engines.js" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/templates/gantry/js/rokmediaqueries.js" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/modules/mod_roknavmenu/themes/default/js/rokmediaqueries.js" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/modules/mod_roknavmenu/themes/default/js/sidemenu.js" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/modules/mod_roknavmenu/themes/fusion/js/sfhover.js" type="text/javascript"></script>
+	<script src="/index.php/wir-bieten/rezepte/plugins/content/jw_allvideos/jw_allvideos/includes/js/behaviour.js?v=6.0.0" type="text/javascript"></script>
+	<script src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/media/com_uniterevolution/assets/rs-plugin/js/jquery.themepunch.plugins.min.js" type="text/javascript"></script>
+	<script src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/media/com_uniterevolution/assets/rs-plugin/js/jquery.themepunch.revolution.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+jQuery(window).on('load',  function() {
+				new JCaption('img.caption');
+			});(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','__gaTracker');
+		__gaTracker('create', 'UA-48108022-1', 'auto');
+		__gaTracker('send', 'pageview');
+	
+	</script>
+	
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+<script>
+window.addEventListener("load", function(){
+window.cookieconsent.initialise({
+  "palette": {
+    "popup": {
+      "background": "#000"
+    },
+    "button": {
+      "background": "#cfcfcf"
+    }
+  },
+  "content": {
+    "message": "Ja, auch diese Webseite verwendet Cookies.\nIndem Sie hier fortfahren, stimmen Sie der Nutzung von Cookies zu. ",
+    "dismiss": "Cookies erlauben!",
+    "link": "Mehr Information",
+    "href": "https://schoenegge.de/index.php/datenschutz"
+  }
+})});
+</script>
+	
+	<script type="text/javascrip">
+		$origin = $_SERVER['HTTP_ORIGIN'];
+$allowed_domains = [
+    'https://schoenegge.de',
+    'https://www.schoenegge.de',
+    'https://oekobox-online.de',
+];
+
+if (in_array($origin, $allowed_domains)) {
+    header('Access-Control-Allow-Origin: ' . $origin);
+}
+	</script>
+	
+
+	
+<script type="text/javascript" src="/js/gms_gaswitch-v200.js"></script>
+<script type="text/javascript">
+gmsInitGASwitch('checkGAActive', 'schoenegge.de');
+if (gmsGATrackingActive()) doStdTracking('UA-48108022-1', 'schoenegge.de'); else initGaDummy();
+</script>
+
+
+	
+
+	
+
+	
+</head>
+<body  class="logo-type-gantry headerstyle-dark font-family-helvetica font-size-is-default menu-type-dropdownmenu menu-dropdownmenu-position-top-b layout-mode-responsive col12">
+        <header id="rt-top-surround">
+				<div id="rt-top" >
+			<div class="rt-container">
+				<div class="rt-grid-3 rt-alpha">
+               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<p>&nbsp;</p>
+<p><a href="https://www.schoenegge.de"><img style="display: block; margin-top: -35px;" src="/index.php/wir-bieten/rezepte/images/modulbilder/schoenegge_logo.png" alt="Naturgarten Schönegge Logo" height="136" width="250" /></a></p></div>
+	                	</div>
+                	</div>
+           </div>
+	
+</div>
+<div class="rt-grid-9 rt-omega">
+    	<div class="rt-block menu-block">
+		<div class="gf-menu-device-container responsive-type-panel"></div>
+<ul class="gf-menu l1 " >
+                    <li class="item101 active last" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/home.png" alt="home.png" />
+                                Home                            </a>
+
+
+                    </li>
+                            <li class="item135" >
+
+            <a class="item image" href="https://schoenegge.de/unser_shop.html?np="  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/shop.png" alt="shop.png" />
+                                Shop                            </a>
+
+
+                    </li>
+                            <li class="item134 parent" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/wie-geht-s"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/oekokiste.png" alt="oekokiste.png" />
+                                Ökokiste                                <span class="border-fixer"></span>
+                            </a>
+
+
+            
+                                    <div class="dropdown columns-1 " style="width:280px;">
+                                                <div class="column col1"  style="width:280px;">
+                            <ul class="l2">
+                                                                                                                    <li class="item141" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/wie-geht-s"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/wie_gehts.png" alt="wie_gehts.png" />
+                                Wie geht&#039;s                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item155" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/unsere-kisten"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/unsere_kisten.png" alt="unsere_kisten.png" />
+                                Unsere Kisten                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item156" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/wohin-wir-liefern"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/wohin_wir_liefern.png" alt="wohin_wir_liefern.png" />
+                                Wohin wir liefern                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item157" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/aktuelle-kiste"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/aktuelle_kiste.png" alt="aktuelle_kiste.png" />
+                                Aktuelle Kiste                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item167" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/rezepte"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/rezepte.png" alt="rezepte.png" />
+                                Rezepte                            </a>
+
+
+                    </li>
+                                                                                                        </ul>
+                        </div>
+                                            </div>
+
+                                    </li>
+                            <li class="item133 parent" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/markt"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/wirbieten.png" alt="wirbieten.png" />
+                                Wir bieten                                <span class="border-fixer"></span>
+                            </a>
+
+
+            
+                                    <div class="dropdown columns-1 " style="width:245px;">
+                                                <div class="column col1"  style="width:245px;">
+                            <ul class="l2">
+                                                                                                                    <li class="item140" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/markt"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/markt.png" alt="markt.png" />
+                                Markt                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item147" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/hofladen"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/hofladen.png" alt="hofladen.png" />
+                                Hofladen                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item148" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/selbsternte"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/selbsternte.png" alt="selbsternte.png" />
+                                Selbsternte                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item166" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/oekokiste/wie-geht-s"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/oekokiste.png" alt="oekokiste.png" />
+                                Ökokiste                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item149" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/anbau"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/anbau.png" alt="anbau.png" />
+                                Anbau                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item150" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/regionale-lieferanten"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/regionale_lieferanten.png" alt="regionale_lieferanten.png" />
+                                Regionale Lieferanten                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item151" >
+
+            <a class="item image" href="https://www.pcgaertner.de" target="_blank" >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/pcg.png" alt="pcg.png" />
+                                PCG Software für Gärtner                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item152" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/lagertipps"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/lagertipps.png" alt="lagertipps.png" />
+                                Lagertipps                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item153" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/rezepte"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/rezepte.png" alt="rezepte.png" />
+                                Rezepte                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item200" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/das-alles-gibt-es-bei-uns"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/das_alles_gibt_es_bei_uns.png" alt="das_alles_gibt_es_bei_uns.png" />
+                                Das alles gibt es bei uns                            </a>
+
+
+                    </li>
+                                                                                                        </ul>
+                        </div>
+                                            </div>
+
+                                    </li>
+                            <li class="item132 parent" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/wer-wir-sind"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/uberuns.png" alt="uberuns.png" />
+                                Über uns                                <span class="border-fixer"></span>
+                            </a>
+
+
+            
+                                    <div class="dropdown columns-1 " style="width:180px;">
+                                                <div class="column col1"  style="width:180px;">
+                            <ul class="l2">
+                                                                                                                    <li class="item138" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/wer-wir-sind"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/werwirsind.png" alt="werwirsind.png" />
+                                Wer wir sind                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item139" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/unsere-philosophie"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/philosophie.png" alt="philosophie.png" />
+                                Unsere Philosophie                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item143" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/unser-team"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/team.png" alt="team.png" />
+                                Unser Team                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item144" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/auszeichnungen"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/auszeichnungen.png" alt="auszeichnungen.png" />
+                                Zertifikate                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item145" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/eindruecke-vom-hof"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/eindruecke.png" alt="eindruecke.png" />
+                                Eindrücke vom Hof                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item146" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/ueber-uns/bilderalben"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/bilderalben.png" alt="bilderalben.png" />
+                                Bilderalben                            </a>
+
+
+                    </li>
+                                                                                                        </ul>
+                        </div>
+                                            </div>
+
+                                    </li>
+                            <li class="item136 parent" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/zeltlager"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/kultursoziales.png" alt="kultursoziales.png" />
+                                Kultur &amp; Soziales                                <span class="border-fixer"></span>
+                            </a>
+
+
+            
+                                    <div class="dropdown columns-1 " style="width:200px;">
+                                                <div class="column col1"  style="width:200px;">
+                            <ul class="l2">
+                                                                                                                    <li class="item219" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/naturkindergarten"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/naturkindergarten.png" alt="naturkindergarten.png" />
+                                Naturkindergarten                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item142" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/zeltlager"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/erlebnis.png" alt="erlebnis.png" />
+                                Erlebnis Naturgarten                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item158" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/schule"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/schule.png" alt="schule.png" />
+                                Schule                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item159" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/erntedankfest"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/erntedankfest.png" alt="erntedankfest.png" />
+                                Erntedankfest                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item160" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/demonstrationsbetrieb"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/demonstrationsbetrieb.png" alt="demonstrationsbetrieb.png" />
+                                Demonstrationsbetrieb                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item187" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/foej-praktikum"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/foj_praktikum.png" alt="foj_praktikum.png" />
+                                FÖJ/Praktikum                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item188" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/wwoof"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/wwoof.png" alt="wwoof.png" />
+                                Wwoof                            </a>
+
+
+                    </li>
+                                                                                                                                                                <li class="item199" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/veranstaltungstipps"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/veranstaltungstipps.png" alt="veranstaltungstipps.png" />
+                                Veranstaltungstipps                            </a>
+
+
+                    </li>
+                                                                                                        </ul>
+                        </div>
+                                            </div>
+
+                                    </li>
+                            <li class="item137" >
+
+            <a class="item image" href="/index.php/wir-bieten/rezepte/index.php/kontakt"  >
+
+                                    <img class="menu-image" src="/index.php/wir-bieten/rezepte/templates/gantry/images/icons/kontakt.png" alt="kontakt.png" />
+                                Kontakt                            </a>
+
+
+                    </li>
+            </ul>		<div class="clear"></div>
+	</div>
+	
+</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+					</header>
+		    <div id="rt-drawer">
+        <div class="rt-container">
+                        <div class="clear"></div>
+        </div>
+    </div>
+    		<div id="rt-transition">
+		<div id="rt-mainbody-surround">
+																					<div class="rt-container">
+		    		          
+<div id="rt-main" class="sa3-mb6-sb3">
+                <div class="rt-container">
+                    <div class="rt-grid-6 rt-push-3">
+                                                <div id="rt-content-top">
+                            <div class="rt-grid-6 rt-alpha rt-omega">
+               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                					 
+			<style type='text/css'>
+			#rev_slider_1_1, #rev_slider_1_1_wrapper { width:595px; height:301px;}	
+			
+						
+			   @media only screen and (min-width: 1200px)  {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:595px; height:301px;}	
+			   }
+			
+						
+			   @media only screen and (min-width: 960px) and (max-width: 1199px) {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:590px; height:298px;}	
+			   }
+			
+						
+			   @media only screen and (min-width: 768px) and (max-width: 959px) {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:590px; height:298px;}	
+			   }
+			
+						
+			   @media only screen and (min-width: 480px) and (max-width: 767px) {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:450px; height:227px;}	
+			   }
+			
+						
+			   @media only screen and (min-width: 460px) and (max-width: 479px) {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:400px; height:202px;}	
+			   }
+			
+						
+			   @media only screen and (min-width: 0px) and (max-width: 459px) {
+			 		  #rev_slider_1_1, #rev_slider_1_1_wrapper { width:350px; height:177px;}	
+			   }
+			
+			</style>	
+				
+				<!-- START REVOLUTION SLIDER ver. 2.2.1 -->
+				
+				<div id="rev_slider_1_1_wrapper" class="rev_slider_wrapper" style="margin:0px auto;background-color:#E9E9E9;padding:5px;margin-top:10px;margin-bottom:0px;direction:ltr;">
+					<div id="rev_slider_1_1" class="rev_slider" style="display:none;">						
+										<ul>
+								
+					<li data-transition="fade" data-slotamount="7" data-masterspeed="300" > 
+					    
+						<img src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/images/home_slideshow/moehren.jpg" alt="" />
+						
+											</li>
+									
+					<li data-transition="fade" data-slotamount="7" data-masterspeed="300" > 
+					    
+						<img src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/images/home_slide_Austausch/kuerbis.jpg" alt="" />
+						
+											</li>
+									
+					<li data-transition="fade" data-slotamount="7" data-masterspeed="300" > 
+					    
+						<img src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/images/home_slide_Austausch/sonnenblume.jpg" alt="" />
+						
+											</li>
+									
+					<li data-transition="fade" data-slotamount="7" data-masterspeed="300" > 
+					    
+						<img src="https://xn--schnegge-p4a.de/index.php/wir-bieten/rezepte/images/home_slide_Austausch/mangold2.jpg" alt="" />
+						
+											</li>
+								</ul>
+									<div class="tp-bannertimer"></div>					</div>
+				</div>
+							
+			<script type="text/javascript">
+				
+				var tpj=jQuery;
+				
+				
+				var revapi1;
+				
+				tpj(document).ready(function() {
+				
+				if (tpj.fn.cssOriginal != undefined)
+					tpj.fn.css = tpj.fn.cssOriginal;
+				
+				if(tpj('#rev_slider_1_1').revolution == undefined)
+					revslider_showDoubleJqueryError('#rev_slider_1_1',"joomla");
+				else	
+					revapi1 = tpj('#rev_slider_1_1').show().revolution(
+					 {
+						delay:9000,
+						startwidth:595,
+						startheight:301,
+						hideThumbs:200,
+						
+						thumbWidth:100,
+						thumbHeight:50,
+						thumbAmount:4,
+						
+						navigationType:"bullet",
+						navigationArrows:"none",
+						navigationStyle:"round",
+						
+						touchenabled:"on",
+						onHoverStop:"on",
+						
+						shadow:2,
+						fullWidth:"off",
+
+						navigationHAlign:"center",
+						navigationVAlign:"bottom",
+						navigationHOffset:0,
+						navigationVOffset:20,
+								
+						stopLoop:"off",
+						stopAfterLoops:-1,
+						stopAtSlide:-1,
+								
+						shuffle:"off",
+						
+						hideSliderAtLimit:0,
+						hideCaptionAtLimit:0,
+						hideAllCaptionAtLilmit:0					});
+				
+				});	//ready
+				
+			</script>
+			
+							<!-- END REVOLUTION SLIDER -->
+					                	</div>
+                	</div>
+           </div>
+	
+</div>
+                        </div>
+                                                						<div class="rt-block">
+	                        <div id="rt-mainbody">
+								<div class="component-content">
+	                            	<article class="item-page" itemscope itemtype="http://schema.org/Article">
+<meta itemprop="inLanguage" content="de-DE" />
+
+
+
+
+
+
+
+
+<div itemprop="articleBody">
+	<p><strong><span style="font-family: arial,helvetica,sans-serif; font-size: 18pt; color: #000000;">Asia-Salat-Penne</span></strong></p>
+<p><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;"><strong><span style="font-size: 14pt;">Zutaten</span></strong> <span style="font-size: 10pt;">für 4 Personen</span>:</span><br /><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">150 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; geräucherter durchwachsener Speck &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">100 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; Asia-Salat &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">1&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; kleines Bund Thymian &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">1&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Orange &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">2&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Schalotten &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">1&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Knoblauchzehe &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">500 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;Penne-Nudeln &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Salz </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">100 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;Kalamata-Oliven &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pfeffer </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">50 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; Haselnussblättchen &nbsp;</span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">50 g&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp; geriebener Parmesankäse &nbsp;</span><br /><br /><strong><span style="font-family: arial,helvetica,sans-serif; font-size: 14pt; color: #000000;">Zubereitung</span></strong><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;"></span></p>
+<p><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Kochzeit: ca. 30 Minuten </span><br /><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Den Speck in Streifen schneiden und in einer großen Pfanne ohne Fett knusprig auslassen. Den Salat putzen, waschen, trocken schütteln und in kurze Streifen schneiden. Den Thymian waschen, trocken schütteln und die Blättchen von den Stielen streifen. </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Die Orange heiß waschen, trocken reiben und die Schale mit einem Zestenreißer in dünnen Streifen abschälen. Die Frucht halbieren und den Saft auspressen. Die Schalotten und den Knoblauch schälen und fein würfeln. </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Nun die Nudeln in kochendem Salzwasser nach Packungsanweisung zubereiten. Schalotten und Knoblauch zum Speck geben und ca. 3 Minuten glasig andünsten. Den Orangensaft dazugießen, aufkochen und ca. 3 Minuten zur Hälfte einköcheln. </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Die Oliven, die Orangenzesten (bis auf einige zum Garnieren) und den Salat dazugeben, kurz aufkochen lassen. Mit Salz und Pfeffer würzen. </span><br /><span style="font-family: arial,helvetica,sans-serif; font-size: 12pt; color: #000000;">Die Nudeln abgießen, kurz abtropfen lassen und zurück in den Topf geben. Thymian, Haselnussblättchen, Parmesan und Speckpfanne zu den Nudeln geben, unterheben und auf Tellern anrichten. Die Teller mit den übrigen Orangenzesten garnieren und servieren.</span></p>
+<p><strong><span style="font-family: arial,helvetica,sans-serif; font-size: 14pt; color: #000000;">Guten Appetit!</span></strong></p> </div>
+
+
+
+	</article>
+
+
+
+								</div>
+	                        </div>
+						</div>
+                                                                    </div>
+                                <div class="rt-grid-3 rt-pull-6">
+                <div id="rt-sidebar-a">
+                               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<div><a href="/index.php/wir-bieten/rezepte/unser_shop.html?np=" target="_self"><img style="margin-top: 10px;" src="/index.php/wir-bieten/rezepte/images/shopping_button.png" alt="Schönegge Onlineshop" /></a></div>
+<div id="link_desktop" style="display: none;"><a href="/index.php/wir-bieten/rezepte/unser_shop.html?np=" target="_self"><img style="margin-top: 10px;" src="/index.php/wir-bieten/rezepte/images/shopping_button.png" alt="Schönegge Onlineshop" /></a></div>
+<div id="link_mobile" style="display: none;"><a href="/index.php/wir-bieten/rezepte/unser_shop.html?np=" target="_self"><img style="margin-top: 10px;" src="/index.php/wir-bieten/rezepte/images/shopping_button.png" alt="Schönegge onlineshop" /></a></div></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<br>
+<div id="link_desktop">
+
+<!-- JoomlaWorks "AllVideos" Plugin (v6.0.0) starts here -->
+
+<div class="avPlayerWrapper avVideo">
+    <div style="width:265px;" class="avPlayerContainer">
+        <div id="AVPlayerID_0_fb5fbd56098e6bfddaece89f326353ca" class="avPlayerBlock">
+            <video class="avPlayer" style="width:265px;height:160px;" src="/index.php/wir-bieten/rezepte/images/videos/video_1080p.mp4" preload="metadata" poster="/index.php/wir-bieten/rezepte/images/videos/video_1080p.jpg" controls controlsList="nodownload"></video>        </div>
+            </div>
+</div>
+
+<!-- JoomlaWorks "AllVideos" Plugin (v6.0.0) ends here -->
+
+</div>
+<div id="link_mobile">
+
+<!-- JoomlaWorks "AllVideos" Plugin (v6.0.0) starts here -->
+
+<div class="avPlayerWrapper avVideo">
+    <div style="width:265px;" class="avPlayerContainer">
+        <div id="AVPlayerID_1_1b7d519ab5c30f3bbfd0b40a2595185b" class="avPlayerBlock">
+            <video class="avPlayer" style="width:265px;height:160px;" src="/index.php/wir-bieten/rezepte/images/videos/video_720p.mp4" preload="metadata" poster="/index.php/wir-bieten/rezepte/images/videos/video_720p.jpg" controls controlsList="nodownload"></video>        </div>
+            </div>
+</div>
+
+<!-- JoomlaWorks "AllVideos" Plugin (v6.0.0) ends here -->
+
+</div>
+<br></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<div><img src="/index.php/wir-bieten/rezepte/images/modultitel/starprodukte.png" alt="sonderangebote" /> <br /> <iframe width="275" height="475" style="border: 0px #E3AA58 solid; border-radius: 10px; margin-bottom: 5px;" src="https://oekobox-online.de/v3/shop/schoenegge/embeditem/html?nid=8&amp;shuffle=1&amp;design=2&amp;max=2&amp;refresh=7" scrolling="auto"></iframe></div></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<a href="/index.php/wir-bieten/rezepte/index.php/hallertau-magazin"><img src="/index.php/wir-bieten/rezepte/images/hallertau_magazin.png" alt="hallertau magazin" /></a><a href="/index.php/wir-bieten/rezepte/index.php/hallertau-magazin"></a><br /><br /></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<img src="/index.php/wir-bieten/rezepte/images/modultitel/aktuelles.png" alt="aktuelles" width="136" height="52" /><br /><br />
+<ul>
+<li style="font-size: 12pt;"><span style="color: #008000; font-size: 14pt; font-family: trebuchet ms, geneva;"><a href="/index.php/wir-bieten/rezepte/index.php/14-oekokiste/46-probekiste-bestellen" style="color: #008000;">Freunde werben</a></span></li>
+<li style="font-size: 12pt;"><span style="color: #008000;"><a href="/index.php/wir-bieten/rezepte/images/PDF/GemseObst_KW_15.pdf" style="color: #008000;"><span style="font-size: 14pt; font-family: trebuchet ms, geneva;">Aktuelle Obst-und Gemüseliste</span></a></span></li>
+<li style="font-size: 12pt;"><span style="font-size: 14pt; font-family: trebuchet ms, geneva; color: #008000;"><a href="/index.php/wir-bieten/rezepte/images/PDF/Thermohaube.pdf" style="color: #008000;">Iso-Thermohauben:ab sofort bestellbar! So können Sie Ihre Ökokiste schützen!</a></span></li>
+<li style="font-size: 12pt;"><span style="font-size: 14pt; font-family: trebuchet ms, geneva; color: #008000;"><a href="/index.php/wir-bieten/rezepte/images/PDF/Plastik-Info.pdf" style="color: #008000;">Plastik-Info; Verpackung</a></span></li>
+<li><span style="font-size: 14pt; color: #008000;"><a href="/index.php/wir-bieten/rezepte/images/PDF/Wurstpakete_Neu.pdf" style="color: #008000;">Neue Wurstpakete</a></span></li>
+<li><span style="font-size: 14pt; color: #008000;"><a href="/index.php/wir-bieten/rezepte/images/Allgemein/WICHTIG/Stellenanzeige_Grtnerei.pdf" style="color: #008000;"><span style="font-family: trebuchet ms, geneva;">Stellenanzeige Gärtner*in Fachrichtung Gemüsebau</span></a></span></li>
+<li><a href="/index.php/wir-bieten/rezepte/images/PDF/Lieferverschiebung_Ostern_2020.pdf"><span style="text-decoration: underline; font-family: trebuchet ms, geneva; font-size: 14pt; color: #008000;">Liefertagsverschiebung Ostern</span></a></li>
+</ul>
+<br /><a href="/index.php/wir-bieten/rezepte/images/PDF/Stellenanzeige-Reinigungskraft.pdf"><span><span style="font-size: 14pt; font-family: trebuchet ms, geneva;"></span></span></a><a href="/index.php/wir-bieten/rezepte/images/PDF/Stellenanzeige_Packer-Fahrer.pdf"><span><span style="font-size: 14pt;"></span></span></a></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<img src="/index.php/wir-bieten/rezepte/images/modultitel/unsere_partner.png" alt="Unsere Partner" /><br />
+<p><a href="https://www.oekokiste.de/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/modulbilder/oekokiste.png" alt="oekokiste" width="121" height="119" /></a>&nbsp;&nbsp; <a href="https://www.naturland.de/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/modulbilder/naturland.png" alt="naturland" width="121" height="119" /></a></p>
+<p><a href="http://www.tagwerkcenter.net/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/modulbilder/tagwerk.png" alt="tagwerk" width="121" height="119" /></a>&nbsp;&nbsp; <a href="https://www.freisinger-land.de/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/modulbilder/fs_land.png" alt="fs land" width="121" height="119" /></a></p></div>
+	                	</div>
+                	</div>
+           </div>
+	
+                </div>
+            </div>
+
+            <div class="rt-grid-3 ">
+                <div id="rt-sidebar-b">
+                               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<a href="/index.php/wir-bieten/rezepte/index.php/14-oekokiste/49-probekiste"><img style="margin-top: 15px;" src="/index.php/wir-bieten/rezepte/images/modulbilder/probekiste_4.png" alt="probekiste 4" /></a><br /><br /></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block rezept">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		<div class="newsflashrezept">
+			
+
+	
+
+	<p><span style="text-decoration: underline;"><a href="/index.php/wir-bieten/rezepte/index.php/20-rezepte-2/478-steckrueben-roesti"><span style="font-family: trebuchet ms, geneva; font-size: 14pt;"><span style="font-family: 'livory', georgia, serif;">Das vorerst letzte aktualisierte Rezept&nbsp; -&nbsp; stöbern Sie gerne in unserem reichhaltigen Rezepteangebot auf unserer Homepage und lassen sich dort inspirieren, bis wir Sie wieder mit aktuellen Rezepten versorgen<br /></span></span></a></span></p>
+<p><a href="/index.php/wir-bieten/rezepte/index.php/20-rezepte-2/478-steckrueben-roesti"><span style="font-family: trebuchet ms, geneva; font-size: 14pt;"><span style="font-family: 'livory', georgia, serif;">Für KW 14</span><span style="font-family: 'livory', georgia, serif;">: </span></span></a></p>
+<p><a href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/rezepte/61-wirsing-quiche"><span style="font-family: trebuchet ms, geneva; font-size: 14pt;"><span style="font-family: 'livory', georgia, serif;">Wirsing-Quiche</span></span></a></p>
+<p><a href="/index.php/wir-bieten/rezepte/index.php/wir-bieten/rezepte/61-wirsing-quiche"><img src="/index.php/wir-bieten/rezepte/images/Pflanzen/wirsing.jpg" alt="wirsing" width="273" height="246" /></a></p>
+<div class="pull-left break-word">
+<div class="pull-left break-word">
+<div class="pull-left break-word">
+<p>&nbsp;</p>
+</div>
+</div>
+</div>
+
+	</div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<br><br><a href="http://www.regionalgeldfreising.de/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/baerling.png" alt="baerling" /></a> <br /><br /></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<a href="/index.php/wir-bieten/rezepte/index.php/kultur-soziales/wwoof"><img src="/index.php/wir-bieten/rezepte/images/wwoof.png" alt="wwoof" /></a> <br /><br /></div>
+	                	</div>
+                	</div>
+           </div>
+	           <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<br /><img style="padding-bottom: 5px;" src="/index.php/wir-bieten/rezepte/images/modultitel/foerderung.png" alt="" /><a href="/index.php/wir-bieten/rezepte/images/Allgemein/foerderprogramm.jpg" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/Allgemein/foerderung.jpg"></a></div>
+	                	</div>
+                	</div>
+           </div>
+	
+                </div>
+            </div>
+
+                    <div class="clear"></div>
+                </div>
+            </div>
+		    	</div>
+											</div>
+	</div>
+			<footer id="rt-footer-surround">
+				<div id="rt-footer">
+			<div class="rt-container">
+				<div class="rt-grid-12 rt-alpha rt-omega">
+               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		<div id="horizmenu-surround">
+        <ul class="menutop level1" >
+                            <li class="item164 root" >
+                        <a class="item" href="/index.php/wir-bieten/rezepte/index.php/impressum"  >
+                    <span>Impressum</span>
+                </a>
+                                </li>
+                                <li class="item165 root" >
+                        <a class="item" href="/index.php/wir-bieten/rezepte/index.php/agb"  >
+                    <span>AGB</span>
+                </a>
+                                </li>
+                                <li class="item239 root" >
+                        <a class="item" href="/index.php/wir-bieten/rezepte/index.php/datenschutz"  >
+                    <span>Datenschutz</span>
+                </a>
+                                </li>
+                        </ul>
+    </div>	                	</div>
+                	</div>
+           </div>
+	
+</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+						<div id="rt-copyright">
+			<div class="rt-container">
+				<div class="rt-grid-6 rt-alpha">
+               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<p>&nbsp;</p>
+<p><a href="https://www.schoenegge.de"><img style="display: block; margin-left: auto; margin-right: auto; margin-top: -30px;" src="/index.php/wir-bieten/rezepte/images/watermark.png" alt="watermark" width="95" height="58" /></a></p></div>
+	                	</div>
+                	</div>
+           </div>
+	
+</div>
+<div class="rt-grid-6 rt-omega">
+               <div class="rt-block ">
+           	<div class="module-surround">
+	           		                	<div class="module-content">
+	                		
+
+<div class="custom"  >
+	<div style="margin-top: 30px;"><a href="https://www.facebook.com/NaturgartenSchoenegge/" target="_blank"><img src="/index.php/wir-bieten/rezepte/images/facebook_icon.png"  alt=""/></a>
+<img src="/index.php/wir-bieten/rezepte/images/modultitel/auf_fb.png" style="padding-bottom: 5px; display: none;">
+
+<iframe src="//www.facebook.com/plugins/likebox.php?href=https%3A%2F%2Fwww.facebook.com%2FNaturgartenSchoenegge&amp;width=260&amp;height=590&amp;colorscheme=light&amp;show_faces=false&amp;header=true&amp;stream=true&amp;show_border=false&amp;appId=140448656044377" scrolling="no" frameborder="1px" style="border:thin solid #E3AA58; overflow:hidden; width:260px; height:595px; border-radius:10px; display:none;" allowTransparency="true" ></iframe></div></div>
+	                	</div>
+                	</div>
+           </div>
+	
+</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+			</footer>
+					
+
+<script src="https://oekobox-online.de/v3/shop/schoenegge/api/client1.js"></script>
+
+	</body>
+</html>
+
+

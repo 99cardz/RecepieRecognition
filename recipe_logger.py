@@ -3,6 +3,7 @@ import sys
 from bs4 import BeautifulSoup
 import requests
 import unicodedata
+import random
 
 
 recipe_file = "recipe.txt"
@@ -41,7 +42,7 @@ def readUnitTable():
             #print("closed connection to DB")
         print("Units from DB: ", *units)
         return units
-
+"""
 def addIngredientsToDb(recipe_class_object):
     ##retrieve all ingredients from recipe_class_object
     all_ingredients = []
@@ -57,8 +58,8 @@ def addIngredientsToDb(recipe_class_object):
             sqliteConnection = sqlite3.connect(data_database)
             cursor = sqliteConnection.cursor()
             #print("Connected to DB to add ingredient")
-            insert_query = """INSERT INTO ingredient_table (ingredient)
-                            VALUES (?);"""
+            insert_query = "INSERT INTO ingredient_table (ingredient)
+                            VALUES (?);"
             cursor.execute(insert_query, [ingredient])
             sqliteConnection.commit()
             #print("inserted ingredient * %s *" % (ingredient))
@@ -73,7 +74,7 @@ def addIngredientsToDb(recipe_class_object):
                 sqliteConnection.close()
                 #print("closed connection to db")
     #print("### Finished adding all non existing Ingredients to Database ###")
-###End addIngredientsToDb
+###End addIngredientsToDb"""
 
 def importrecipe():
     with open(recipe_file) as file:
@@ -199,49 +200,72 @@ def addRecipeToDb(recipe_class_object):
 
 
 ##End addRecipeToDb()
-def retrieveIngredientID(ingredient_str):
-    ingredient_ID = 0
+def retrieveIngredientID(ingredient_str, database):
+    #print("retrieving ingredient ID for ingredient :" ,ingredient_str)
     try:
-        sqliteConnection = sqlite3.connect(data_database)
+        sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
         #print("Connected to %s to retrieve ID for : %s" % (data_database, ingredient_str))
-        query = """SELECT * from ingredient_table"""
-        cursor.execute(query)
-        records = cursor.fetchall()
-        for row in records:
-            #print(row)
-            if row[1] == ingredient_str:
-                ingredient_ID = row[0]
-                #print("Ingredient ID of %s is %s" %(ingredient_str, row[0]))
-                break
-        if ingredient_ID == 0:
-            print("############# Ingredient %s not found int Database #############" % (ingredient_str))
-
+        query = "SELECT ingredient_id FROM ingredients_table WHERE ingredient=?;"
+        cursor.execute(query, [ingredient_str])
+        output = cursor.fetchone()
+        ingredient_ID = output[0]
     except sqlite3.Error as error:
-        print("error")
+        print("!!!error while retrieving INgredient ID\n", error)
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
                 #print("closed connection to db")
         return ingredient_ID
 ###End retrieveIngredientID()
+def retrieveUnitID(unit_str, database):
+    #print("retrieving Unit id or adding unit: ", unit_str)
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        #print("Connected to %s to retrieve ID for : %s" % (data_database, ingredient_str))
+        query = "SELECT unit_id FROM units_table WHERE unit=?;"
+        cursor.execute(query, [unit_str])
+        output = cursor.fetchall()
+        #print(output, type(output))
+        if len(output) is 0:
+            print("adding unit")
+            query = "INSERT INTO units_table (unit) VALUES (?)"
+            cursor.execute(query, [unit_str])
+            sqliteConnection.commit()
+            id = cursor.lastrowid
+        else:
+            id = output[0][0]
+        #print("id is: ",id)
+    except sqlite3.Error as error:
+        print("!!!error while retrieving Unit ID\n", error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+                #print("closed connection to db")
+        return id
 
 def retrieveRecipeOnline(url_str):
     raw_html = requests.get(url_str)
     html = BeautifulSoup(raw_html.content, 'html.parser')
 
     go = False
+    resume = False
     recipe = []
 
     for p in html.select("span"):
         if p.text == "Zutaten":
             go = True
+            resume = True
         if p.text == "Zubereitung":
             go = False
             break
         if go is True:
             recipe.append(unicodedata.normalize("NFKD",p.text))
             #print(recipe[-1])
+
+    if resume is False:
+        return None
 
     for i in range(2):
         del(recipe[0])
@@ -264,23 +288,28 @@ def processRecipe(recipe, database, url):
 
     recipe_id = addNewRecipeTable(url, database)
 
-    known_units = getKnownUnits(database)
-    known_ingredients = getKnownIngredients(database)
-    recipe_dict = {}
+    ignore_list = ["und","oder"]
 
     for line in recipe:
         print("> next line")
 
-        amount = ""
-        unit = ""
+        known_units = getKnownUnits(database)
+        known_ingredients = getKnownIngredients(database)
+
+        amount = None
+        unit = None
         ingredient = []
 
         line_list = line.split()
-        line_list = [line_list[n].lower()for n in range(0,len(line_list))]
+        line_list = [line_list[n].lower().replace(",", "") for n in range(0,len(line_list))]
+
+        print("line content: %s"%(line_list))
 
         item_buffer = []
         for item in line_list:
-            if hasNumber(item):
+            if item in ignore_list:
+                continue
+            elif hasNumber(item):
                 split_item = list(item)
                 go_ahead = True
                 for i in split_item:
@@ -288,13 +317,20 @@ def processRecipe(recipe, database, url):
                         go_ahead = False
                 if go_ahead:
                     amount = item
+                else:
+                    print("!!item - %s - is not recocnisable du to there being a mixture of numbers and letters!!"%item)
+                    amount = str(input("what is the amount? >"))
+                    unit = str(input("what is the unit? >"))
             elif item in known_ingredients:
-                ingredient.append(item)
+                item_buffer.append(item)
+                ingredient.append(" ".join(item_buffer))
+                #print(item_buffer, ingredient)
+                item_buffer = []
             elif item in known_units:
                 unit = item
             else:
-                print("item %s not known!" %item)
-                input_str = input("Choose i,u,o,a for ingredient, unit, other or ammount. If something is joined then add j.")
+                print("item - %s - not known!" %item)
+                input_str = input("i,u,o,a,j >>") #Ingredient, Unit, Other, Amount, Join
                 if "j" in input_str:
                     item_buffer.append(item)
                 else:
@@ -302,43 +338,80 @@ def processRecipe(recipe, database, url):
                     if input_str is "i":
                         ingredient.append(" ".join(item_buffer))
                         item_buffer = []
-                        known_ingredients.append(ingredient)
+                        #known_ingredients.append(ingredient)
                     elif input_str is "u":
                         unit = " ".join(item_buffer)
                         item_buffer = []
-                        known_units.append(unit)
+                        #known_units.append(unit)
                     elif input_str is "o":
-                        print("nothing happens here yet!")
+                        print("ignoring item - %s -"%item)
+                        ignore_list.append(item)
+                        print("ignoring: ", ignore_list)
+                        item_buffer = []
                     elif input is "a":
-                        amount = str(input("what does the unknown translate to?"))
-        #add amount, ingredient and unit of line to recipe table of database
-        addLineToRecipeTable(amount, unit, ingredient, recipe_id, database)
-        print("added line to db")
-def addLineToRecipeTable(amount, unit, ingredient, recipe_id, database):
+                        amount = str(input("what does the unknown translate to? >"))
+
+        if unit is not None:
+            unit_id = retrieveUnitID(unit, database)
+        else:
+            unit_id = None
+        if ingredient:
+            for item in ingredient:
+            #print(type(item))
+                if item not in known_ingredients:
+                    ingredient_id = addIngredientToDb(item, database)
+                else:
+                    #print(item)
+                    ingredient_id = retrieveIngredientID(item, database)
+                addLineToRecipeTable(amount, unit_id, ingredient_id, recipe_id, database)
+                #print("added :", item)
+            #print("added line to db")
+def addIngredientToDb(ingredient, database):
+    #print("adding new ingredient: ",ingredient)
     try:
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
-        query = """INSERT INTO R%s (amount, unit_id, ingredient_id) VALUES (?,?,?);"""%recipe_id
-        cursor.execute(query, (amount, 1, 3))
+        query = "INSERT INTO ingredients_table(ingredient) VALUES (?);"
+        #print(query)
+        cursor.execute(query, [ingredient])
+        sqliteConnection.commit()
+        #print("added new ingredient %s to ingredients_table"%ingredient)
+        id = cursor.lastrowid
     except sqlite3.Error as error:
-        print("!!!!!!!!!error while adding Recipe Table\n", error)
+        print("!!!!!!!!!error while adding ingredient to Table\n", error)
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+            return id
+def addLineToRecipeTable(amount, unit_id, ingredient_id, recipe_id, database):
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        query = "INSERT INTO R%s (amount, unit_id, ingredient_id) VALUES (?,?,?);"%recipe_id
+        #print(query)
+        cursor.execute(query, (amount, unit_id, ingredient_id))
+        sqliteConnection.commit()
+        #print("added new line to recipe %s"%recipe_id)
+    except sqlite3.Error as error:
+        print("!!!!!!!!!error while adding line to Table\n", error)
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
 def addNewRecipeTable(url, database):
+    #print(url, database)
     try:
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
-        cursor.execute("""SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' ;""")#AND name !='units_table' AND name != 'ingredient_table' AND name != 'source_table';""")
+        cursor.execute("SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' AND name !='units_table' AND name != 'ingredients_table' AND name != 'sources_table';")
         recipeID = cursor.fetchone()[0]
-        print(recipeID)
-        cursor.execute("""CREATE TABLE R%s(
-            amount TEXT,
-            unit_id INTEGER,
-            ingredient_id INTEGER;
-        )"""%recipeID)
-        query = """INSERT INTO sources_table (recipe_id, source) VALUES (?,?);"""
+        #print(recipeID)
+        query = "CREATE TABLE R%s(amount TEXT, unit_id INTEGER, ingredient_id INTEGER);"%recipeID
+        cursor.execute(query)
+        #print("created table")
+        query = "INSERT INTO sources_table (recipe_id, source) VALUES (?, ?);"
         cursor.execute(query, (recipeID, url))
+        sqliteConnection.commit()
+        #print("inserted source")
     except sqlite3.Error as error:
         print("!!!!!!!!!error while adding Recipe Table\n", error)
     finally:
@@ -350,7 +423,7 @@ def getKnownUnits(database):
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
 
-        query = """SELECT * from units_table;"""
+        query = "SELECT * from units_table;"
         cursor.execute(query)
         records = cursor.fetchall()
         units = []
@@ -361,7 +434,7 @@ def getKnownUnits(database):
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
-        print(units, type(units))
+        #print(units, type(units))
         return units
 ##ENd getKnownUnits()
 
@@ -370,7 +443,7 @@ def getKnownIngredients(database):
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
 
-        query = """SELECT * from ingredients_table;"""
+        query = "SELECT * from ingredients_table;"
         cursor.execute(query)
         records = cursor.fetchall()
         ingredients = []
@@ -381,20 +454,52 @@ def getKnownIngredients(database):
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
-        print(ingredients, type(ingredients))
+        #print(ingredients, type(ingredients))
         return ingredients
+def checkIfRecipeExists(url, database):
+    flag = True
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+
+        query = "SELECT recipe_id from sources_table WHERE source=?;"
+        cursor.execute(query, [url])
+        output = cursor.fetchall()
+        #print(output)
+        if output:
+            flag = False
+        #print(flag)
+    except sqlite3.Error as error:
+        print(error)
+    finally:
+        if (sqliteConnection):
+                sqliteConnection.close()
+        return flag
 
 if __name__ == '__main__':
 
     recipe_database = "schoenegge_rezepte.db"
     url_list = importUrls("urls.txt")
 
-    for url in url_list:
+    max = 5
 
-        ### >> need check for url/recipe already existing!!!!!
+    for i in range(max):
+
+        url = url_list[random.randint(1, len(url_list))]
 
         print(">>> now processing ", url)
+        
+        if not checkIfRecipeExists(url, recipe_database):
+            print("<<< recipe already exists in database!")
+            i += 1
+            continue
+
         raw_recipe = retrieveRecipeOnline(url)
+        if raw_recipe is None:
+            print("<<< Recipe unreadable, skipping...")
+            i += 1
+            continue
+
         recipe = processRecipe(raw_recipe, recipe_database, url)
 
         #addUrlToDb(recipe_database,url)
