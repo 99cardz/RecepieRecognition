@@ -2,7 +2,7 @@ import sqlite3
 
 import os
 
-database = "schoenegge_rezepte.db"
+database = "test_rezepte.db"
 
 os.remove(database)
 

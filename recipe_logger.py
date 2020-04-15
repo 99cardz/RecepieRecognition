@@ -229,7 +229,7 @@ def retrieveUnitID(unit_str, database):
         output = cursor.fetchall()
         #print(output, type(output))
         if len(output) is 0:
-            print("adding unit")
+            #print("adding unit")
             query = "INSERT INTO units_table (unit) VALUES (?)"
             cursor.execute(query, [unit_str])
             sqliteConnection.commit()
@@ -288,7 +288,7 @@ def processRecipe(recipe, database, url):
 
     recipe_id = addNewRecipeTable(url, database)
 
-    ignore_list = ["und","oder"]
+    ignore_list = ["und","oder", "für", "die"]
 
     for line in recipe:
         print("> next line")
@@ -300,57 +300,76 @@ def processRecipe(recipe, database, url):
         unit = None
         ingredient = []
 
+        if ":" in line:
+            continue
+
         line_list = line.split()
-        line_list = [line_list[n].lower().replace(",", "") for n in range(0,len(line_list))]
+
+
+        line_list = [line_list[n].lower().replace(",","") for n in range(0,len(line_list))]
 
         print("line content: %s"%(line_list))
 
         item_buffer = []
-        for item in line_list:
-            if item in ignore_list:
-                continue
-            elif hasNumber(item):
-                split_item = list(item)
+        while line_list:
+            #print(line_list)
+            if line_list[0] in ignore_list:
+                del(line_list[0])
+            elif hasNumber(line_list[0]):
+                split_item = list(line_list[0])
                 go_ahead = True
                 for i in split_item:
                     if not i.isdigit():
                         go_ahead = False
                 if go_ahead:
-                    amount = item
+                    amount = line_list[0]
+                    del(line_list[0])
                 else:
                     print("!!item - %s - is not recocnisable du to there being a mixture of numbers and letters!!"%item)
                     amount = str(input("what is the amount? >"))
                     unit = str(input("what is the unit? >"))
-            elif item in known_ingredients:
-                item_buffer.append(item)
+                    del(line_list[0])
+            elif line_list[0] in known_ingredients:
+                item_buffer.append(line_list[0])
+                del(line_list[0])
                 ingredient.append(" ".join(item_buffer))
                 #print(item_buffer, ingredient)
                 item_buffer = []
-            elif item in known_units:
+            elif line_list[0] in known_units:
                 unit = item
+                del(line_list[0])
+            elif longItem(line_list[0], line_list, database):
+                line_list[0] = line_list[0] + " " + line_list[1]
+                del(line_list[1])
+                print("joined: ", line_list)
             else:
-                print("item - %s - not known!" %item)
+                print("item - %s - not known!" %line_list[0])
                 input_str = input("i,u,o,a,j >>") #Ingredient, Unit, Other, Amount, Join
                 if "j" in input_str:
-                    item_buffer.append(item)
+                    item_buffer.append(line_list[0])
+                    del(line_list[0])
                 else:
-                    item_buffer.append(item)
+                    item_buffer.append(line_list[0])
                     if input_str is "i":
                         ingredient.append(" ".join(item_buffer))
+                        del(line_list[0])
                         item_buffer = []
                         #known_ingredients.append(ingredient)
                     elif input_str is "u":
                         unit = " ".join(item_buffer)
+                        del(line_list[0])
                         item_buffer = []
                         #known_units.append(unit)
                     elif input_str is "o":
-                        print("ignoring item - %s -"%item)
-                        ignore_list.append(item)
-                        print("ignoring: ", ignore_list)
+                        print("ignoring item - %s -"%line_list[0])
+                        del(line_list[0])
+                        #ignore_list.append(line_list[0])
+                        #print("ignoring: ", ignore_list)
                         item_buffer = []
                     elif input is "a":
                         amount = str(input("what does the unknown translate to? >"))
-
+                        del(line_list[0])
+        ##end while
         if unit is not None:
             unit_id = retrieveUnitID(unit, database)
         else:
@@ -366,6 +385,34 @@ def processRecipe(recipe, database, url):
                 addLineToRecipeTable(amount, unit_id, ingredient_id, recipe_id, database)
                 #print("added :", item)
             #print("added line to db")
+def longItem(item, line, database):
+    #print("checking")
+    try:
+        sqliteConnection = sqlite3.connect(database)
+        cursor = sqliteConnection.cursor()
+        query = "SELECT ingredient FROM ingredients_table WHERE ingredient LIKE ?;"
+        cursor.execute(query, [item + "%"])
+        output = cursor.fetchall()
+        #print(output)
+        #print(item, line)
+        position = [i for i, x in enumerate(line) if x is item][0]
+        #print(line[position] + " " + line[position+1])
+
+        if output:
+            for ingredient in output:
+                #print(type(ingredient))
+                #print(len(line), position)
+                if line[position] + " " + line[position+1] == ingredient[0] and len(line) >= position+2:
+                    #print("line+1")
+                    return True
+        else:
+            return False
+    except sqlite3.Error as error:
+        print("error while searching for item\n", error)
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+
 def addIngredientToDb(ingredient, database):
     #print("adding new ingredient: ",ingredient)
     try:
@@ -485,10 +532,11 @@ if __name__ == '__main__':
 
     for i in range(max):
 
+        #url = "https://schönegge.de/index.php/wir-bieten/rezepte/152-blumenkohl-brokkoli-gratin"
         url = url_list[random.randint(1, len(url_list))]
 
         print(">>> now processing ", url)
-        
+
         if not checkIfRecipeExists(url, recipe_database):
             print("<<< recipe already exists in database!")
             i += 1
