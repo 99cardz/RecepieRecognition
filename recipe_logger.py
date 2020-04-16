@@ -286,7 +286,7 @@ def importUrls(file):
 
 def processRecipe(recipe, database, url):
 
-    recipe_id = addNewRecipeTable(url, database)
+    recipe_id = getRecipeID(url, database)
 
     ignore_list = ["und","oder", "für", "die"]
 
@@ -449,18 +449,16 @@ def addNewRecipeTable(url, database):
     try:
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
-        cursor.execute("SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' AND name !='units_table' AND name != 'ingredients_table' AND name != 'sources_table';")
+        cursor.execute("SELECT count(source_id) FROM sources_table;")
         recipeID = cursor.fetchone()[0]
         #print(recipeID)
-        query = "CREATE TABLE R%s(amount TEXT, unit_id INTEGER, ingredient_id INTEGER);"%recipeID
         cursor.execute(query)
-        #print("created table")
         query = "INSERT INTO sources_table (recipe_id, source) VALUES (?, ?);"
         cursor.execute(query, (recipeID, url))
         sqliteConnection.commit()
         #print("inserted source")
     except sqlite3.Error as error:
-        print("!!!!!!!!!error while adding Recipe Table\n", error)
+        print("!!!!!!!!!error while adding id to source Table\n", error)
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
