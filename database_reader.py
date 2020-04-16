@@ -8,7 +8,7 @@ def RecipeAmount():
         sqliteConnection = sqlite3.connect(recipe_database)
         cursor = sqliteConnection.cursor()
 
-        cursor.execute("SELECT count(*) FROM sqlite_master WHERE type = 'table' AND name != 'sqlite_sequence' AND name !='units_table' AND name != 'ingredients_table' AND name != 'sources_table';")
+        cursor.execute("SELECT count(recipe_id) FROM sources_table")
         recipe_amount = cursor.fetchone()[0]
     except sqlite3.Error as error:
         print("Error:", error)
@@ -35,7 +35,8 @@ def showRecipe(id):
         sqliteConnection = sqlite3.connect(recipe_database)
         cursor = sqliteConnection.cursor()
 
-        cursor.execute("SELECT * FROM R%s"%id)
+        query = "SELECT * FROM recipes_table WHERE recipe_id =?"
+        cursor.execute(query, [id])
         recipe_raw = cursor.fetchall()
         #print(recipe_raw)
         for line in recipe_raw:
@@ -61,9 +62,9 @@ def showRecipe(id):
             sqliteConnection.close()
             #return list
 if __name__ == '__main__':
-    amount = RecipeAmount()
-    print("there are %s Recipes" %amount)
     recipe_list = RecipeNames()
+    amount = len(recipe_list)
+    print("there are %s Recipes" %amount)
     id_list = [str(recipe_list[i][0]) for i in range(amount)]
     #print(id_list)
     for recipe in recipe_list:

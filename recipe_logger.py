@@ -286,10 +286,11 @@ def importUrls(file):
 
 def processRecipe(recipe, database, url):
 
-    recipe_id = getRecipeID(url, database)
+    recipe_id = getRecipeID(url, database)#and link source to recipe_id
 
     ignore_list = ["und","oder", "für", "die"]
 
+    end = False
     for line in recipe:
         print("> next line")
 
@@ -325,7 +326,7 @@ def processRecipe(recipe, database, url):
                     amount = line_list[0]
                     del(line_list[0])
                 else:
-                    print("!!item - %s - is not recocnisable du to there being a mixture of numbers and letters!!"%item)
+                    print("!!item - %s - is not recocnisable du to there being a mixture of numbers and letters!!"%line_list[0])
                     amount = str(input("what is the amount? >"))
                     unit = str(input("what is the unit? >"))
                     del(line_list[0])
@@ -336,7 +337,7 @@ def processRecipe(recipe, database, url):
                 #print(item_buffer, ingredient)
                 item_buffer = []
             elif line_list[0] in known_units:
-                unit = item
+                unit = line_list[0]
                 del(line_list[0])
             elif longItem(line_list[0], line_list, database):
                 line_list[0] = line_list[0] + " " + line_list[1]
@@ -344,7 +345,7 @@ def processRecipe(recipe, database, url):
                 print("joined: ", line_list)
             else:
                 print("item - %s - not known!" %line_list[0])
-                input_str = input("i,u,o,a,j >>") #Ingredient, Unit, Other, Amount, Join
+                input_str = input("i,u,o,a,j,p >>") #Ingredient, Unit, Other, Amount, Join
                 if "j" in input_str:
                     item_buffer.append(line_list[0])
                     del(line_list[0])
@@ -366,9 +367,15 @@ def processRecipe(recipe, database, url):
                         #ignore_list.append(line_list[0])
                         #print("ignoring: ", ignore_list)
                         item_buffer = []
-                    elif input is "a":
+                    elif input_str is "a":
                         amount = str(input("what does the unknown translate to? >"))
                         del(line_list[0])
+                    elif input_str is "p":
+                        line_list = []
+                    elif input_str is "e":
+                        end = True
+                        print("ending recipe")
+                        break
         ##end while
         if unit is not None:
             unit_id = retrieveUnitID(unit, database)
@@ -385,26 +392,37 @@ def processRecipe(recipe, database, url):
                 addLineToRecipeTable(amount, unit_id, ingredient_id, recipe_id, database)
                 #print("added :", item)
             #print("added line to db")
+        if end:
+            break
 def longItem(item, line, database):
     #print("checking")
     try:
+        output = []
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
         query = "SELECT ingredient FROM ingredients_table WHERE ingredient LIKE ?;"
         cursor.execute(query, [item + "%"])
-        output = cursor.fetchall()
+        output.append(cursor.fetchall())
+        query = "SELECT unit FROM units_table WHERE unit LIKE ?"
+        cursor.execute(query, [item + "%"])
+        output.append(cursor.fetchall())
         #print(output)
         #print(item, line)
         position = [i for i, x in enumerate(line) if x is item][0]
         #print(line[position] + " " + line[position+1])
 
-        if output:
-            for ingredient in output:
-                #print(type(ingredient))
-                #print(len(line), position)
-                if line[position] + " " + line[position+1] == ingredient[0] and len(line) >= position+2:
-                    #print("line+1")
-                    return True
+        if output[0] or output[1]:
+            if len(line) >= position+2:
+                for ingredient in output[0]:
+                    #print(len(line), position)
+                    if line[position] + " " + line[position+1] == ingredient[0]:
+                        #print("line+1")
+                        return True
+                for unit in output[1]:
+                    #print(unit, line[position] + " " + line[position+1])
+                    if line[position] + " " + line[position+1] == unit[0]:
+                        #print("line+1")
+                        return True
         else:
             return False
     except sqlite3.Error as error:
@@ -434,25 +452,23 @@ def addLineToRecipeTable(amount, unit_id, ingredient_id, recipe_id, database):
     try:
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
-        query = "INSERT INTO R%s (amount, unit_id, ingredient_id) VALUES (?,?,?);"%recipe_id
+        query = "INSERT INTO recipes_table (amount, unit_id, ingredient_id, recipe_id) VALUES (?,?,?,?);"
         #print(query)
-        cursor.execute(query, (amount, unit_id, ingredient_id))
+        cursor.execute(query, (amount, unit_id, ingredient_id, recipe_id))
         sqliteConnection.commit()
-        #print("added new line to recipe %s"%recipe_id)
     except sqlite3.Error as error:
         print("!!!!!!!!!error while adding line to Table\n", error)
     finally:
         if (sqliteConnection):
                 sqliteConnection.close()
-def addNewRecipeTable(url, database):
+def getRecipeID(url, database):
     #print(url, database)
     try:
         sqliteConnection = sqlite3.connect(database)
         cursor = sqliteConnection.cursor()
-        cursor.execute("SELECT count(source_id) FROM sources_table;")
+        cursor.execute("SELECT count(recipe_id) FROM sources_table;")
         recipeID = cursor.fetchone()[0]
         #print(recipeID)
-        cursor.execute(query)
         query = "INSERT INTO sources_table (recipe_id, source) VALUES (?, ?);"
         cursor.execute(query, (recipeID, url))
         sqliteConnection.commit()
@@ -526,27 +542,25 @@ if __name__ == '__main__':
     recipe_database = "schoenegge_rezepte.db"
     url_list = importUrls("urls.txt")
 
-    max = 5
+    #max = 5
 
-    for i in range(max):
+    while url_list:
 
-        #url = "https://schönegge.de/index.php/wir-bieten/rezepte/152-blumenkohl-brokkoli-gratin"
-        url = url_list[random.randint(1, len(url_list))]
-
+        #url = "https://schönegge.de/index.php/wir-bieten/rezepte/75-zucchinispaghetti-mit-avocadopesto"
+        url = url_list[random.randint(0, len(url_list)-1)]
+        print("there are %s recipes left"%len(url_list))
         print(">>> now processing ", url)
 
         if not checkIfRecipeExists(url, recipe_database):
             print("<<< recipe already exists in database!")
-            i += 1
-            continue
-
-        raw_recipe = retrieveRecipeOnline(url)
-        if raw_recipe is None:
-            print("<<< Recipe unreadable, skipping...")
-            i += 1
-            continue
-
-        recipe = processRecipe(raw_recipe, recipe_database, url)
+            url_list.remove(url)
+        else:
+            raw_recipe = retrieveRecipeOnline(url)
+            if raw_recipe is None:
+                print("<<< Recipe unreadable, skipping...")
+                url_list.remove(url)
+            else:
+                recipe = processRecipe(raw_recipe, recipe_database, url)
 
         #addUrlToDb(recipe_database,url)
 
