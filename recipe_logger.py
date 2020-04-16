@@ -288,7 +288,7 @@ def processRecipe(recipe, database, url):
 
     recipe_id = getRecipeID(url, database)#and link source to recipe_id
 
-    ignore_list = ["und","oder", "für", "die"]
+    ignore_list = ["und","oder", "für", "die", "frische","gerieben", "der","frisch","geriebener","zum"]
 
     end = False
     for line in recipe:

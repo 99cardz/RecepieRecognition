@@ -14,4 +14,4 @@ print(unique)
 
 with open("urls.txt", "w") as file:
 	for item in unique:
-		file.write(item.replace("https://schönegge.de", "", 1))
+		file.write(item.replace("/index.php", "https://schönegge.de/index.php", 1))
